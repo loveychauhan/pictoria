@@ -3,6 +3,8 @@ import Button from "../../component/Button";
 import Searchbar from "../../component/Searchbar";
 import UplaodModal from "../../component/UplaodModal";
 import { Link } from "react-router";
+import LoginDetail from "../../component/LoginDetail";
+import { ToastContainer } from "react-toastify";
 
 const home = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +24,7 @@ const home = () => {
               className={`w-full max-w-[96px] cursor-pointer rounded-[10px] border-[1px] border-gray-400 px-2 py-1.5`}
               to="/login"
             >
-              Logout
+              Login
             </Link>
           </div>
         </nav>
@@ -33,7 +35,10 @@ const home = () => {
         setIsOpen={setIsOpen}
         onclickHandler={onclickHandler}
       />
-      <main></main>
+      <main>
+        <LoginDetail />
+      </main>
+
     </>
   );
 };

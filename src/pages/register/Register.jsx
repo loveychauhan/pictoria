@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router";
 import Button from "../../component/Button";
+import { auth, db } from "../../firebase/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { createPortal } from "react-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const Register = () => {
   const [fname, setFname] = useState(null);
@@ -8,10 +13,36 @@ const Register = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
-  return (
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      const user = auth.currentUser;
+      if (user) {
+        await setDoc(doc(db, "User", user.uid), {
+          fname: fname,
+          lname: lname,
+          email: user.email,
+          photo: null,
+        });
+        toast.success("User Logged In Successfully", {
+          position: "top-center",
+        });
+        window.location.href = "/";
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message, {
+        position: "top-center",
+      });
+    }
+  };
+
+  return createPortal(
     <div className="grid h-[80vh] w-screen place-items-center backdrop-blur">
       <form
         action=""
+        onSubmit={handleSubmit}
         className="bg-light-gray mx-auto grid w-full max-w-[320px] gap-3 rounded-[10px] p-4"
       >
         <div className="w-full max-w-[320px]">
@@ -31,7 +62,7 @@ const Register = () => {
             className="bg-background block w-full rounded-[6px] border-1 border-gray-300 p-1 outline-0"
             placeholder="Denver"
             id="lname"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setLname(e.target.value)}
           />
         </div>
         <div className="w-full max-w-[320px]">
@@ -65,7 +96,9 @@ const Register = () => {
           </Link>
         </p>
       </form>
-    </div>
+      <ToastContainer />
+    </div>,
+    document.getElementById("modal-root"),
   );
 };
 
