@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Button from "../../component/Button";
 import { auth, db } from "../../firebase/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -12,6 +12,7 @@ const Register = () => {
   const [lname, setLname] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ const Register = () => {
         toast.success("User Logged In Successfully", {
           position: "top-center",
         });
-        window.location.href = "/";
+        navigate("/");
       }
     } catch (error) {
       console.log(error.message);
