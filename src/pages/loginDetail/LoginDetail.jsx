@@ -1,29 +1,26 @@
-import { useEffect, useState } from "react";
-import useDocData from "../hooks/useDocData";
-import Button from "./Button";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { auth } from "../firebase/firebase";
 import { createPortal } from "react-dom";
+import Button from "../../component/Button";
+import useDocData from "../../hooks/useDocData";
+import { auth } from "../../firebase/firebase";
 
-const LoginDetail = ({ isOpen }) => {
+const LoginDetail = ({}) => {
   const { userDetail, loading } = useDocData();
+  const navigate = useNavigate();
   const clickHandler = async () => {
     try {
       await auth.signOut();
       toast.success("Logout Successfully", {
         position: "top-center",
       });
+      navigate("/");
     } catch (error) {
       toast.error(error.message, {
         position: "top-center",
       });
     }
   };
-
-  useEffect(() => {
-    console.log(userDetail);
-  }, [userDetail]);
 
   return createPortal(
     <>
@@ -42,7 +39,7 @@ const LoginDetail = ({ isOpen }) => {
               <p>{userDetail.email}</p>
             </div>
 
-            <Link to="/" onClick={clickHandler}>
+            <Link onClick={clickHandler}>
               <Button text="Logout" color="favorites" />
             </Link>
           </div>

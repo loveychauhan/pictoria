@@ -1,21 +1,33 @@
 import { createPortal } from "react-dom";
 import Button from "./Button";
 import { useState } from "react";
+import { db } from "../firebase/firebase";
+import { setDoc, doc } from "firebase/firestore";
 
 const UplaodModal = ({ isOpen, setIsOpen, onclickHandler }) => {
   const [isImage, setIsImage] = useState(false);
-  const submitHandler = (e) => {
+  const [img, setImg] = useState();
+  const [name, setName] = useState();
+  const [tag, setTag] = useState();
+
+  const submitHandler = async (e) => {
     e.preventDefault();
     if (isImage) {
+      await setDoc(doc(db, "Image", id), {
+        name: name,
+        img: img,
+        tag: tag,
+      });
       setIsOpen((prev) => !prev);
     }
   };
+
+  const tags = ["nature", "landscape", "portrait", "other"];
+
   return createPortal(
     <>
       {isOpen && (
-        <div
-          className="absolute top-0 grid h-screen w-screen place-items-center backdrop-blur"
-        >
+        <div className="absolute top-0 grid h-screen w-screen place-items-center backdrop-blur">
           <form
             action="/upload"
             onSubmit={submitHandler}
@@ -42,9 +54,15 @@ const UplaodModal = ({ isOpen, setIsOpen, onclickHandler }) => {
               <input
                 type="text"
                 id="title"
+                onChange={(e) => setName(e.target.value)}
                 placeholder="(Nature)"
                 className="text-gray placeholder-gray block w-full rounded-[10px] border-2 border-gray-300 p-1 outline-0 md:text-xl"
               />
+            </div>
+            <div>
+              {["nature", "landscape", "portrait", "other"]?.map((tag) => {
+                <div>{tag}</div>;
+              })}
             </div>
             <div className="flex justify-center gap-2">
               <Button text="Cancel" onclickHandler={onclickHandler} />

@@ -3,13 +3,13 @@ import Button from "../../component/Button";
 import Searchbar from "../../component/Searchbar";
 import UplaodModal from "../../component/UplaodModal";
 import { Link } from "react-router";
-import LoginDetail from "../../component/LoginDetail";
 import useDocData from "../../hooks/useDocData";
 import { CiUser } from "react-icons/ci";
 
 const home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { userDetail, loading } = useDocData();
+  const [hasError, setHasError] = useState(false);
   const onclickHandler = (e) => {
     e.preventDefault();
     setIsOpen((prev) => !prev);
@@ -29,11 +29,15 @@ const home = () => {
             >
               {userDetail ? (
                 <>
-                  {userDetail.photo ? (
+                  {userDetail?.photo ? (
                     <div className="h-10 w-10 cursor-pointer rounded-full">
                       <img
                         className="h-full w-full rounded-full"
-                        src={userDetail.photo}
+                        src={userDetail.photo || "./user.png"}
+                        alt="user profile"
+                        onError={(e) => {
+                          e.target.src = "./user.png";
+                        }}
                       />
                     </div>
                   ) : (
