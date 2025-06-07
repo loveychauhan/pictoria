@@ -2,28 +2,44 @@ import { useEffect, useState } from "react";
 import { getDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 
-const useDocData = () => {
-  const [userDetail, setUserDetail] = useState(null);
+const useDocData = (collection) => {
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        const docRef = doc(db, "User", user.uid);
+    let unsubscribeAuth;
+
+    const fetchData = async (id) => {
+      try {
+        const docRef = doc(db, collection, id);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          const userData = docSnap.data();
-          setUserDetail(userData);
+          setData(docSnap.data());
         } else {
-          console.log("User document does not exist.");
+          setData(null);
         }
-      } else {
-        setUserDetail(null);
+      } catch (error) {
+        console.error("Error fetching document:", error);
+        setData(null);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
+    };
+
+    unsubscribeAuth = auth.onAuthStateChanged((user) => {
+      if (user) {
+        fetchData(user.uid);
+      } else {
+        setData(null);
+        setLoading(false);
+      }
     });
-    return () => unsubscribe();
-  }, []);
-  return { userDetail, loading };
+
+    return () => {
+      if (unsubscribeAuth) unsubscribeAuth();
+    };
+  }, [collection]);
+
+  return { data, loading };
 };
 
 export default useDocData;

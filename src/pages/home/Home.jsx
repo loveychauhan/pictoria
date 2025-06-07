@@ -1,20 +1,34 @@
 import { useState } from "react";
 import Button from "../../component/Button";
 import Searchbar from "../../component/Searchbar";
-import UplaodModal from "../../component/UplaodModal";
-import { Link } from "react-router";
+import UploadModal from "../../component/UploadModal";
+import { Link } from "react-router-dom";
 import useDocData from "../../hooks/useDocData";
 import { CiUser } from "react-icons/ci";
+import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
+import Gallery from "../../component/Gallery";
 
 const home = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { userDetail, loading } = useDocData();
-  const [hasError, setHasError] = useState(false);
+  const { data, loading } = useDocData("User");
+  const [imageURL, setImageURL] = useState(null);
+  console.log(imageURL);
+
   const onclickHandler = (e) => {
     e.preventDefault();
     setIsOpen((prev) => !prev);
   };
 
+  const handleImageUrl = async (e) => {
+    const file = e.target.files[0];
+    if (!file) {
+      <p className="text-red text-center">No File Present!</p>;
+      return;
+    }
+    const imgUrl = await uploadToCloudinary(file);
+    setImageURL(imgUrl);
+  };
+  
   return (
     <>
       <div>
@@ -25,15 +39,15 @@ const home = () => {
 
             <Link
               className={`flex w-full max-w-[96px] cursor-pointer place-items-center ${loading ? "" : "mx-auto"} `}
-              to={userDetail ? "/logout" : "/login"}
+              to={data ? "/logout" : "/login"}
             >
-              {userDetail ? (
+              {data ? (
                 <>
-                  {userDetail?.photo ? (
+                  {data?.photo ? (
                     <div className="h-10 w-10 cursor-pointer rounded-full">
                       <img
                         className="h-full w-full rounded-full"
-                        src={userDetail.photo || "./user.png"}
+                        src={data.photo || "./user.png"}
                         alt="user profile"
                         onError={(e) => {
                           e.target.src = "./user.png";
@@ -54,12 +68,16 @@ const home = () => {
         </nav>
         <Searchbar />
       </div>
-      <UplaodModal
+      <UploadModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         onclickHandler={onclickHandler}
+        handleImageUrl={handleImageUrl}
+        imageURL={imageURL}
       />
-      <main></main>
+      <main>
+        <Gallery imageURL={imageURL} />
+      </main>
     </>
   );
 };

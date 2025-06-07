@@ -6,7 +6,7 @@ import useDocData from "../../hooks/useDocData";
 import { auth } from "../../firebase/firebase";
 
 const LoginDetail = ({}) => {
-  const { userDetail, loading } = useDocData();
+  const { data, loading } = useDocData("User");
   const navigate = useNavigate();
   const clickHandler = async () => {
     try {
@@ -24,19 +24,19 @@ const LoginDetail = ({}) => {
 
   return createPortal(
     <>
-      {userDetail ? (
+      {data ? (
         <div className="absolute top-0 grid h-screen w-screen place-items-center backdrop-blur">
           <div className="bg-light-gray relative mx-auto grid w-full max-w-[320px] gap-3 rounded-[10px] p-4">
             <h2 className="text-center text-2xl font-medium">
-              Welcome {userDetail.fname}
+              Welcome {data.fname}
             </h2>
             <div>
               <h3>Name</h3>
-              <p>{userDetail.fname}</p>
+              <p>{data.fname}</p>
             </div>
             <div>
               <h3>Email</h3>
-              <p>{userDetail.email}</p>
+              <p>{data.email}</p>
             </div>
 
             <Link onClick={clickHandler}>

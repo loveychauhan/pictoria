@@ -1,5 +1,5 @@
 import "./App.css";
-import UplaodModal from "./component/UplaodModal";
+import UploadModal from "./component/UploadModal";
 import Home from "./pages/Home/home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login/Login";
@@ -16,7 +16,7 @@ function App() {
           <Route path="/logout" element={<LoginDetail />} />
           <Route path="/register" element={<Register />} />
         </Routes>
-        <UplaodModal />
+        <UploadModal />
       </BrowserRouter>
     </>
   );
