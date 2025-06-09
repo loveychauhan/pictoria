@@ -7,7 +7,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { createPortal } from "react-dom";
 import { toast, ToastContainer } from "react-toastify";
 
-const Register = () => {
+const Register = ({}) => {
   const [fname, setFname] = useState(null);
   const [lname, setLname] = useState(null);
   const [email, setEmail] = useState(null);

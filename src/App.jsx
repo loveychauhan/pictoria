@@ -5,8 +5,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import LoginDetail from "./pages/loginDetail/LoginDetail";
+import { ToastContainer } from "react-toastify";
 
 function App() {
+  console.log("hello app");
   return (
     <>
       <BrowserRouter>
@@ -17,6 +19,7 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Routes>
         <UploadModal />
+        <ToastContainer />
       </BrowserRouter>
     </>
   );

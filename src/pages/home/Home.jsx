@@ -8,11 +8,12 @@ import { CiUser } from "react-icons/ci";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
 import Gallery from "../../component/Gallery";
 
-const home = () => {
+const home = ({}) => {
   const [isOpen, setIsOpen] = useState(false);
   const { data, loading } = useDocData("User");
   const [imageURL, setImageURL] = useState(null);
-  console.log(imageURL);
+  const [isFile, setIsFile] = useState(false);
+  console.log("hello home");
 
   const onclickHandler = (e) => {
     e.preventDefault();
@@ -27,8 +28,9 @@ const home = () => {
     }
     const imgUrl = await uploadToCloudinary(file);
     setImageURL(imgUrl);
+    setIsFile(true);
   };
-  
+
   return (
     <>
       <div>
@@ -74,6 +76,8 @@ const home = () => {
         onclickHandler={onclickHandler}
         handleImageUrl={handleImageUrl}
         imageURL={imageURL}
+        isFile={isFile}
+        setIsFile={setIsFile}
       />
       <main>
         <Gallery imageURL={imageURL} />

@@ -12,7 +12,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { createPortal } from "react-dom";
 import { toast, ToastContainer } from "react-toastify";
 
-const Login = () => {
+const Login = ({}) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const provider = new GoogleAuthProvider();
@@ -27,7 +27,7 @@ const Login = () => {
         position: "top-center",
       });
       navigate("/");
-    } catch (error) {
+    } catch (error) { 
       console.log(error.message);
       toast.error(error.message, {
         position: "top-center",

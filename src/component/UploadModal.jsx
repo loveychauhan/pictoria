@@ -3,6 +3,7 @@ import Button from "./Button";
 import { useState } from "react";
 import { auth, db } from "../firebase/firebase";
 import { setDoc, doc, collection } from "firebase/firestore";
+import { RiFolderCheckFill } from "react-icons/ri";
 
 const UploadModal = ({
   isOpen,
@@ -10,31 +11,30 @@ const UploadModal = ({
   onclickHandler,
   handleImageUrl,
   imageURL,
+  isFile,
 }) => {
   const [name, setName] = useState("");
   const [tag, setTag] = useState("");
+  // console.log("hello modal");
 
   const submitHandler = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
-
     const newDocRef = doc(collection(db, "Image"));
-
-    if (!imageURL || !user) return;
-
     try {
       await setDoc(newDocRef, {
         url: imageURL,
         tag,
         name,
         imgId: newDocRef.id,
-        likes: [],
+        likes: 0,
         uploadedBy: user.uid || "unknown",
       });
+      window.location.reload();
     } catch (error) {
       console.error("Upload failed:", error);
     } finally {
-      setIsOpen(false); 
+      setIsOpen(false);
     }
   };
 
@@ -48,7 +48,7 @@ const UploadModal = ({
   return createPortal(
     <>
       {isOpen && (
-        <div className="absolute top-0 grid h-screen w-screen place-items-center backdrop-blur">
+        <div className="absolute top-0 grid h-screen w-full place-items-center backdrop-blur">
           <form
             onSubmit={submitHandler}
             className="bg-light-gray relative mx-auto grid w-full max-w-[320px] gap-3 rounded-[10px] p-4"
@@ -64,9 +64,14 @@ const UploadModal = ({
             />
             <label
               htmlFor="img"
-              className="flex cursor-pointer items-center justify-center rounded-lg border-2 border-gray-300 bg-gray-100 px-6 py-3 text-gray-700 transition duration-300 hover:bg-gray-200"
+              className="flex cursor-pointer items-center justify-center gap-1 rounded-lg border-2 border-gray-300 bg-gray-100 px-6 py-3 text-gray-700 transition duration-300 hover:bg-gray-200"
             >
-              📁 Select Image
+              {isFile ? (
+                <RiFolderCheckFill className="text-2xl text-[#FCD34D]" />
+              ) : (
+                "📁"
+              )}{" "}
+              Select Image
             </label>
             <div>
               <label htmlFor="title" className="font-medium">
