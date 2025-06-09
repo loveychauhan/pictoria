@@ -1,20 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSolidLike } from "react-icons/bi";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "../firebase/firebase";
 import { toast } from "react-toastify";
 
 const Like = ({ image }) => {
-  const [likeCount, setLikeCount] = useState(image.likes || 0);
+  const [likeCount, setLikeCount] = useState(image.likeCount || 0);
   const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    if (!auth.currentUser || !image.likes) {
+      setIsLiked(false);
+      return;
+    }
+    const liked = image.likes.includes(auth.currentUser.uid);
+    setIsLiked(liked);
+    // setLikeCount(image.likeCount || 0);
+  }, [image.likes, image.likeCount, auth.currentUser]);
 
   const likeHandler = async () => {
     const newLikeCount = isLiked ? likeCount - 1 : likeCount + 1;
     const docRef = doc(db, "Image", image.id);
 
+    if (!auth.currentUser) {
+      toast.info("Login to like  Images , It's free 😊", {
+        position: "top-center",
+      });
+      return;
+    }
+
     try {
       await updateDoc(docRef, {
-        likes: newLikeCount,
+        likeCount: newLikeCount,
+        likes: isLiked
+          ? arrayRemove(auth.currentUser.uid)
+          : arrayUnion(auth.currentUser.uid),
       });
       setLikeCount(newLikeCount);
       setIsLiked(!isLiked);
@@ -29,10 +49,10 @@ const Like = ({ image }) => {
       {" "}
       <button
         onClick={likeHandler}
-        className="absolute right-2 bottom-1 flex  items-center  gap-1"
+        className="absolute right-2 bottom-1 flex items-center gap-1"
       >
         {" "}
-        <p className="text-center text-[14px] mt-0.5 font-medium text-white">
+        <p className="mt-0.5 text-center text-[14px] font-medium text-white">
           {likeCount}
         </p>
         <BiSolidLike

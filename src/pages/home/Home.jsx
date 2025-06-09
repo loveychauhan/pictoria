@@ -2,21 +2,29 @@ import { useState } from "react";
 import Button from "../../component/Button";
 import Searchbar from "../../component/Searchbar";
 import UploadModal from "../../component/UploadModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useDocData from "../../hooks/useDocData";
 import { CiUser } from "react-icons/ci";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
 import Gallery from "../../component/Gallery";
+import { auth } from "../../firebase/firebase";
+import { toast } from "react-toastify";
 
 const home = ({}) => {
   const [isOpen, setIsOpen] = useState(false);
   const { data, loading } = useDocData("User");
   const [imageURL, setImageURL] = useState(null);
   const [isFile, setIsFile] = useState(false);
-  console.log("hello home");
 
   const onclickHandler = (e) => {
     e.preventDefault();
+    if (!auth.currentUser) {
+      toast.info("Login to like  Images , It's free 😊", {
+        position: "top-center",
+      });
+      return;
+    }
+
     setIsOpen((prev) => !prev);
   };
 
@@ -33,9 +41,11 @@ const home = ({}) => {
 
   return (
     <>
-      <div>
+      <div className="xs:m-8 m-4">
         <nav className="flex w-full items-center justify-between">
-          <h1 className="text-2xl font-medium">Pictoria</h1>
+          <h1 className="text-gray text-2xl font-medium md:text-3xl">
+            Pictoria
+          </h1>
           <div className="flex gap-3">
             <Button text="Upload" onclickHandler={onclickHandler} />
 
@@ -57,7 +67,7 @@ const home = ({}) => {
                       />
                     </div>
                   ) : (
-                    <CiUser className="text-2xl" />
+                    <CiUser className="h-9 w-9 rounded-full bg-blue-600 p-1 text-2xl font-medium text-white" />
                   )}
                 </>
               ) : (
@@ -79,7 +89,7 @@ const home = ({}) => {
         isFile={isFile}
         setIsFile={setIsFile}
       />
-      <main>
+      <main className="xs:m-8 m-4">
         <Gallery imageURL={imageURL} />
       </main>
     </>

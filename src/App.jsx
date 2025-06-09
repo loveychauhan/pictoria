@@ -8,7 +8,6 @@ import LoginDetail from "./pages/loginDetail/LoginDetail";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-  console.log("hello app");
   return (
     <>
       <BrowserRouter>

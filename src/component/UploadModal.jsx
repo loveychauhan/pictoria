@@ -17,6 +17,12 @@ const UploadModal = ({
   const [tag, setTag] = useState("");
   // console.log("hello modal");
 
+  if (isOpen) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
@@ -27,7 +33,8 @@ const UploadModal = ({
         tag,
         name,
         imgId: newDocRef.id,
-        likes: 0,
+        likeCount: 0,
+        likes: [],
         uploadedBy: user.uid || "unknown",
       });
       window.location.reload();
@@ -48,10 +55,10 @@ const UploadModal = ({
   return createPortal(
     <>
       {isOpen && (
-        <div className="absolute top-0 grid h-screen w-full place-items-center backdrop-blur">
+        <div className="fixed inset-0 z-50 grid place-items-center p-2 backdrop-blur">
           <form
             onSubmit={submitHandler}
-            className="bg-light-gray relative mx-auto grid w-full max-w-[320px] gap-3 rounded-[10px] p-4"
+            className="bg-light-gray relative mx-auto grid w-full max-w-sm gap-4 rounded-xl p-4"
           >
             <h2 className="text-center text-2xl font-medium">Upload a Photo</h2>
             <input

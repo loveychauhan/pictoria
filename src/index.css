@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+:root {
+  --color-primary: #4caf50; /*(Fresh Green) → Action buttons, highlights */
+  --color-secondary: #ffc107; /*(Warm Yellow) Accents, notifications */
+  --color-favorites: #e91e63; /*(Vibrant Pink) → Interactive elements like likes*/
+}
+
 @theme {
   --color-primary: #4caf50; /*(Fresh Green) → Action buttons, highlights */
   --color-secondary: #ffc107; /*(Warm Yellow) Accents, notifications */
@@ -7,4 +13,16 @@
   --color-favorites: #e91e63; /*(Vibrant Pink) → Interactive elements like likes*/
   --color-light-gray: #eeeeee; /*(Light Gray) → Subtle separation & depth */
   --color-gray: #333333; /*(Deep Gray) → Readable text without being too harsh*/
+}
+
+@keyframes gradinentMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }

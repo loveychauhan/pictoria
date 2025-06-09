@@ -4,11 +4,11 @@ import { db } from "../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Like from "./Like";
 import Masonry from "react-masonry-css";
+import ImageRendering from "./ImageRendering";
 
 const Gallery = () => {
   const [error, setError] = useState(false);
   const [images, setImages] = useState([]);
-  console.log("hello gallery");
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -27,10 +27,11 @@ const Gallery = () => {
   }, []);
 
   const breakpoints = {
-    default: 4,
-    1100: 3,
+    default: 5,
+    1280: 4,
+    1024: 3,
     768: 2,
-    500: 1,
+    400: 1,
   };
 
   return (
@@ -39,29 +40,11 @@ const Gallery = () => {
       className="flex w-full gap-4"
       columnClassName="space-y-4"
     >
-      {images.map((img) => {
-        return (
-          <Link key={img.id} className="relative block">
-            <Like image={img} />{" "}
-            {error ? (
-              <div className="bg-light-gray h-[240px] w-[180px] w-full rounded-xl"></div>
-            ) : (
-              ""
-            )}
-            {img?.url ? (
-              <img
-                className="w-full rounded-xl object-cover"
-                src={img.url}
-                onError={(e) => {
-                  setError(true);
-                }}
-              />
-            ) : (
-              ""
-            )}
-          </Link>
-        );
-      })}
+      {images
+        .filter((img) => img.url)
+        .map((img) => {
+          return <ImageRendering key={img.id} img={img} />;
+        })}
     </Masonry>
   );
 };

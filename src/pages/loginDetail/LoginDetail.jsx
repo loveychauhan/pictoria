@@ -21,32 +21,53 @@ const LoginDetail = ({}) => {
       });
     }
   };
-
   return createPortal(
     <>
       {data ? (
-        <div className="absolute top-0 grid h-screen w-screen place-items-center backdrop-blur">
-          <div className="bg-light-gray relative mx-auto grid w-full max-w-[320px] gap-3 rounded-[10px] p-4">
-            <h2 className="text-center text-2xl font-medium">
-              Welcome {data.fname}
+        <div className="fixed inset-0 z-50 grid place-items-center p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-sm space-y-4 rounded-2xl bg-white p-6 shadow-xl md:max-w-md lg:max-w-lg dark:bg-gray-800">
+            <h2 className="text-center text-2xl font-semibold text-gray-800 dark:text-white">
+              Welcome, {data.fname}
             </h2>
-            <div>
-              <h3>Name</h3>
-              <p>{data.fname}</p>
+
+            <div className="mx-auto w-full max-w-[100px] rounded-full">
+              {data.photo ? (
+                <img
+                  className="rounded-full"
+                  src={data.photo}
+                  alt="user Profile"
+                  onError={(e) => {
+                    e.target.src = "/user.png";
+                  }}
+                />
+              ) : (
+                ""
+              )}
             </div>
-            <div>
-              <h3>Email</h3>
-              <p>{data.email}</p>
+            <div className="space-y-1">
+              <h3 className="text-sm text-gray-500 dark:text-gray-300">Name</h3>
+              <p className="text-base font-medium text-gray-700 dark:text-white">
+                {data.fname}
+              </p>
             </div>
 
-            <Link onClick={clickHandler}>
-              <Button text="Logout" color="favorites" />
-            </Link>
+            <div className="space-y-1">
+              <h3 className="text-sm text-gray-500 dark:text-gray-300">
+                Email
+              </h3>
+              <p className="text-base font-medium text-gray-700 dark:text-white">
+                {data.email}
+              </p>
+            </div>
+
+            <div className="pt-2">
+              <Link onClick={clickHandler}>
+                <Button text="Logout" color="favorites" />
+              </Link>
+            </div>
           </div>
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
     </>,
     document.getElementById("modal-root"),
   );
