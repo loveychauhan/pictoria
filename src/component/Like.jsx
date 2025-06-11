@@ -9,14 +9,14 @@ const Like = ({ image }) => {
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
-    if (!auth.currentUser || !image.likes) {
+    if (!auth.currentUser) {
       setIsLiked(false);
       return;
     }
-    const liked = image.likes.includes(auth.currentUser.uid);
-    setIsLiked(liked);
-    // setLikeCount(image.likeCount || 0);
-  }, [image.likes, image.likeCount, auth.currentUser]);
+    if (image.likes.includes(auth.currentUser.uid)) {
+      setIsLiked(true);
+    }
+  }, [image.likes, auth.currentUser]);
 
   const likeHandler = async () => {
     const newLikeCount = isLiked ? likeCount - 1 : likeCount + 1;
@@ -49,14 +49,15 @@ const Like = ({ image }) => {
       {" "}
       <button
         onClick={likeHandler}
-        className="absolute right-2 bottom-1 flex items-center gap-1"
+        className="flex items-center gap-1 px-1 py-1"
       >
-        {" "}
-        <p className="mt-0.5 text-center text-[14px] font-medium text-white">
+        <p className="text-[14px] leading-none font-medium text-white">
           {likeCount}
         </p>
         <BiSolidLike
-          className={`text-[20px] shadow-2xl shadow-gray-800/60 transition-all duration-300 hover:shadow-2xl ${isLiked ? "text-blue-600" : "text-white"}`}
+          className={`text-[18px] transition-all duration-300 hover:shadow-2xl ${
+            isLiked ? "text-blue-600" : "text-white"
+          }`}
         />
       </button>
     </>

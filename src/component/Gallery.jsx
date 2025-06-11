@@ -10,12 +10,14 @@ const Gallery = ({ filterKey, search }) => {
   const breakpoints = {
     default: 6,
     1280: 4,
-    768: 3,
-    400: 2,
+    768: 2,
+    400: 1,
   };
 
   useEffect(() => {
     let updated = images;
+    const key = filterKey?.toLocaleLowerCase();
+
     if (search) {
       updated = images.filter(
         (img) =>
@@ -23,23 +25,11 @@ const Gallery = ({ filterKey, search }) => {
           img.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
       );
     } else if (filterKey === "Most Liked") {
-      updated = images.sort((x, y) => y.likeCount - x.likeCount);
-    } else if (filterKey === "Landscape") {
-      updated = images.filter(
-        (img) => img.tag && img.tag === filterKey.toLocaleLowerCase(),
-      );
-    } else if (filterKey === "Portrait") {
-      updated = images.filter(
-        (img) => img.tag && img.tag === filterKey.toLocaleLowerCase(),
-      );
-    } else if (filterKey === "Other") {
-      updated = images.filter(
-        (img) => img.tag && img.tag === filterKey.toLocaleLowerCase(),
-      );
-    } else if (filterKey === "Nature") {
-      updated = images.filter(
-        (img) => img.tag && img.tag === filterKey.toLocaleLowerCase(),
-      );
+      updated = images
+        .filter((img) => img.url)
+        .sort((x, y) => y.likeCount - x.likeCount);
+    } else if (["landscape", "nature", "portrait", "other"].includes(key)) {
+      updated = images.filter((img) => img.tag === key);
     } else {
       updated = images;
     }

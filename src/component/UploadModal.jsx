@@ -4,6 +4,7 @@ import { useState } from "react";
 import { auth, db } from "../firebase/firebase";
 import { setDoc, doc, collection } from "firebase/firestore";
 import { RiFolderCheckFill } from "react-icons/ri";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const UploadModal = ({
   isOpen,
@@ -12,10 +13,10 @@ const UploadModal = ({
   handleImageUrl,
   imageURL,
   isFile,
+  uploadLoading,
 }) => {
   const [name, setName] = useState("");
   const [tag, setTag] = useState("");
-
   if (isOpen) {
     document.body.style.overflow = "hidden";
   } else {
@@ -73,12 +74,22 @@ const UploadModal = ({
               htmlFor="img"
               className="flex cursor-pointer items-center justify-center gap-1 rounded-lg border-2 border-gray-300 bg-gray-100 px-6 py-3 text-gray-700 transition duration-300 hover:bg-gray-200"
             >
-              {isFile ? (
-                <RiFolderCheckFill className="text-2xl text-[#FCD34D]" />
+              {!uploadLoading ? (
+                <>
+                  {" "}
+                  {isFile ? (
+                    <p className="flex gap-1">
+                      {" "}
+                      <RiFolderCheckFill className="text-2xl text-[#FCD34D]" />{" "}
+                      Select Image
+                    </p>
+                  ) : (
+                    "📁 Select Image"
+                  )}{" "}
+                </>
               ) : (
-                "📁"
-              )}{" "}
-              Select Image
+                <AiOutlineLoading3Quarters className="animate-spin text-xl font-medium text-[#FCD34D] transition-all ease-in-out" />
+              )}
             </label>
             <div>
               <label htmlFor="title" className="font-medium">
@@ -102,7 +113,7 @@ const UploadModal = ({
                     type="button"
                     onClick={handleTagClick}
                     className={`cursor-pointer rounded-[6px] border border-gray-400 px-1.5 py-0.5 text-sm ${
-                      tag === `#${item}` ? "bg-favorites text-white" : ""
+                      tag === `${item}` ? "bg-favorites text-white" : ""
                     }`}
                   >
                     #{item}

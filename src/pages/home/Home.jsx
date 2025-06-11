@@ -9,7 +9,6 @@ import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
 import Gallery from "../../component/Gallery";
 import { auth } from "../../firebase/firebase";
 import { toast } from "react-toastify";
-
 import FilterButton from "../../component/FilterButton";
 import Footer from "../../component/Footer";
 
@@ -20,6 +19,8 @@ const home = ({}) => {
   const [isFile, setIsFile] = useState(false);
   const [filterKey, setFilterKey] = useState();
   const [search, setSearch] = useState("");
+  const [openFilter, setOpenFilter] = useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
 
   document.body.style.backgroundColor = "light-gray";
 
@@ -39,11 +40,18 @@ const home = ({}) => {
       <p className="text-red text-center">No File Present!</p>;
       return;
     }
-    const imgUrl = await uploadToCloudinary(file);
-    setImageURL(imgUrl);
-    setIsFile(true);
+    try {
+      setUploadLoading(true);
+      const imgUrl = await uploadToCloudinary(file);
+      console.log(imageURL);
+      setImageURL(imgUrl);
+      if (imageURL) setIsFile(true);
+    } catch (error) {
+      console.log("upload failed");
+    } finally {
+      setUploadLoading(false);
+    }
   };
-  const [openFilter, setOpenFilter] = useState(false);
 
   const clickHandler = () => {
     setOpenFilter((prev) => !prev);
@@ -115,6 +123,7 @@ const home = ({}) => {
         imageURL={imageURL}
         isFile={isFile}
         setIsFile={setIsFile}
+        uploadLoading={uploadLoading}
       />
       <main className="hide-scrollbar xs:px-4 max-h-[calc(100vh-128px)] overflow-y-auto scroll-smooth px-2 pt-2">
         <Gallery imageURL={imageURL} filterKey={filterKey} search={search} />
