@@ -1,27 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      padding: 2rem;
-      line-height: 1.6;
-      color: #333;
-    }
-    h1, h2 {
-      color: #2b6cb0;
-    }
-    code {
-      background: #eee;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-    ul {
-      margin-left: 1.5rem;
-    }
-  </style>
-</head>
+
 <body>
 
   <h1>Pictoria: Modern Image Gallery Application</h1>
