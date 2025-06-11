@@ -15,7 +15,6 @@ const UploadModal = ({
 }) => {
   const [name, setName] = useState("");
   const [tag, setTag] = useState("");
-  // console.log("hello modal");
 
   if (isOpen) {
     document.body.style.overflow = "hidden";
@@ -35,6 +34,7 @@ const UploadModal = ({
         imgId: newDocRef.id,
         likeCount: 0,
         likes: [],
+        favorites: [],
         uploadedBy: user.uid || "unknown",
       });
       window.location.reload();
@@ -47,7 +47,7 @@ const UploadModal = ({
 
   const handleTagClick = (e) => {
     e.stopPropagation();
-    setTag(e.target.innerText);
+    setTag(e.target.innerText.replace("#", ""));
   };
 
   const tags = ["nature", "landscape", "portrait", "other"];

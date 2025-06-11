@@ -1,38 +1,50 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { db } from "../firebase/firebase";
-import { collection, getDocs } from "firebase/firestore";
-import Like from "./Like";
 import Masonry from "react-masonry-css";
 import ImageRendering from "./ImageRendering";
+import useImages from "../hooks/useImages";
+import { useEffect, useState } from "react";
 
-const Gallery = () => {
-  const [error, setError] = useState(false);
-  const [images, setImages] = useState([]);
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "Image"));
-        const imageContainer = [];
-        querySnapshot.forEach((doc) => {
-          imageContainer.push({ id: doc.id, ...doc.data() });
-        });
-        setImages(imageContainer);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    fetchImage();
-  }, []);
+const Gallery = ({ filterKey, search }) => {
+  const { images } = useImages();
+  const [filteredData, setFilteredData] = useState([]);
 
   const breakpoints = {
-    default: 5,
+    default: 6,
     1280: 4,
-    1024: 3,
-    768: 2,
-    400: 1,
+    768: 3,
+    400: 2,
   };
+
+  useEffect(() => {
+    let updated = images;
+    if (search) {
+      updated = images.filter(
+        (img) =>
+          img.name &&
+          img.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
+      );
+    } else if (filterKey === "Most Liked") {
+      updated = images.sort((x, y) => y.likeCount - x.likeCount);
+    } else if (filterKey === "Landscape") {
+      updated = images.filter(
+        (img) => img.tag && img.tag === filterKey.toLocaleLowerCase(),
+      );
+    } else if (filterKey === "Portrait") {
+      updated = images.filter(
+        (img) => img.tag && img.tag === filterKey.toLocaleLowerCase(),
+      );
+    } else if (filterKey === "Other") {
+      updated = images.filter(
+        (img) => img.tag && img.tag === filterKey.toLocaleLowerCase(),
+      );
+    } else if (filterKey === "Nature") {
+      updated = images.filter(
+        (img) => img.tag && img.tag === filterKey.toLocaleLowerCase(),
+      );
+    } else {
+      updated = images;
+    }
+    setFilteredData(updated);
+  }, [filterKey, images, search]);
 
   return (
     <Masonry
@@ -40,11 +52,9 @@ const Gallery = () => {
       className="flex w-full gap-4"
       columnClassName="space-y-4"
     >
-      {images
-        .filter((img) => img.url)
-        .map((img) => {
-          return <ImageRendering key={img.id} img={img} />;
-        })}
+      {filteredData?.map((img) => {
+        return <ImageRendering key={img.id} img={img} />;
+      })}
     </Masonry>
   );
 };

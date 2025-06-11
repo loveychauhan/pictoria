@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "../../component/Button";
 import Searchbar from "../../component/Searchbar";
 import UploadModal from "../../component/UploadModal";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useDocData from "../../hooks/useDocData";
 import { CiUser } from "react-icons/ci";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
@@ -10,18 +10,23 @@ import Gallery from "../../component/Gallery";
 import { auth } from "../../firebase/firebase";
 import { toast } from "react-toastify";
 
+import FilterButton from "../../component/FilterButton";
+import Footer from "../../component/Footer";
+
 const home = ({}) => {
   const [isOpen, setIsOpen] = useState(false);
   const { data, loading } = useDocData("User");
   const [imageURL, setImageURL] = useState(null);
   const [isFile, setIsFile] = useState(false);
+  const [filterKey, setFilterKey] = useState();
+  const [search, setSearch] = useState("");
+
+  document.body.style.backgroundColor = "light-gray";
 
   const onclickHandler = (e) => {
     e.preventDefault();
     if (!auth.currentUser) {
-      toast.info("Login to like  Images , It's free 😊", {
-        position: "top-center",
-      });
+      toast.info("Login to upload images , It's free 😊", {});
       return;
     }
 
@@ -38,10 +43,24 @@ const home = ({}) => {
     setImageURL(imgUrl);
     setIsFile(true);
   };
+  const [openFilter, setOpenFilter] = useState(false);
+
+  const clickHandler = () => {
+    setOpenFilter((prev) => !prev);
+  };
+
+  const filterHandler = (e) => {
+    setFilterKey(e.target.innerText);
+    setOpenFilter(false);
+  };
+
+  const inputHandler = (e) => {
+    setSearch(e.target.value);
+  };
 
   return (
     <>
-      <div className="xs:m-8 m-4">
+      <div className="xs:px-4 px-2 pt-2">
         <nav className="flex w-full items-center justify-between">
           <h1 className="text-gray text-2xl font-medium md:text-3xl">
             Pictoria
@@ -78,7 +97,15 @@ const home = ({}) => {
             </Link>
           </div>
         </nav>
-        <Searchbar />
+        <div className="flex w-full items-center justify-between">
+          {" "}
+          <Searchbar inputHandler={inputHandler} />
+          <FilterButton
+            filterHandler={filterHandler}
+            clickHandler={clickHandler}
+            openFilter={openFilter}
+          />
+        </div>
       </div>
       <UploadModal
         isOpen={isOpen}
@@ -89,9 +116,10 @@ const home = ({}) => {
         isFile={isFile}
         setIsFile={setIsFile}
       />
-      <main className="xs:m-8 m-4">
-        <Gallery imageURL={imageURL} />
+      <main className="hide-scrollbar xs:px-4 max-h-[calc(100vh-128px)] overflow-y-auto scroll-smooth px-2 pt-2">
+        <Gallery imageURL={imageURL} filterKey={filterKey} search={search} />
       </main>
+      <Footer />
     </>
   );
 };

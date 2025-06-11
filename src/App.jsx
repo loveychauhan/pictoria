@@ -18,7 +18,10 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Routes>
         <UploadModal />
-        <ToastContainer />
+        <ToastContainer
+          position="top-center"
+          className="px-3 sm:p-0"
+        />
       </BrowserRouter>
     </>
   );

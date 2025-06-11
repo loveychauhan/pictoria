@@ -1,6 +1,7 @@
-import { getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
+import { toast } from "react-toastify";
 
 const useImages = () => {
   const [images, setImages] = useState([]);
@@ -13,14 +14,17 @@ const useImages = () => {
         querySnapshot.forEach((doc) => {
           imageContainer.push({ id: doc.id, ...doc.data() });
         });
-        setImages(imageContainer);
+        setImages(imageContainer.filter((img) => Array.isArray(img.url) && img.url.length > 0));
       } catch (error) {
-        console.log("error");
+        toast.error('Image failing to load', {
+          position: 'top-center'
+        })
       }
     };
     fetchImage();
   }, []);
-  return [images];
+
+  return { images };
 };
 
 export default useImages;
