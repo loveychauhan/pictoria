@@ -12,10 +12,8 @@
   <h2>Core Features</h2>
   <ul>
     <li><strong>Like Functionality:</strong> Prevents duplicate likes and tracks user interactions.</li>
-    <li><strong>Favorite Album Creation:</strong> Authenticated users can curate their own image collections.</li>
     <li><strong>User Authentication:</strong> Secures sensitive actions like uploading, liking, and favoriting.</li>
     <li><strong>Search Filters:</strong> Allows users to efficiently discover relevant images.</li>
-    <li><strong>Dark Mode Support:</strong> Enhances user experience with theme toggle support.</li>
     <li><strong>Responsive Layouts:</strong> Fully optimized for various screen sizes and devices.</li>
   </ul>
 
@@ -23,7 +21,6 @@
   <ul>
     <li>Resolved Firebase document creation inconsistencies.</li>
     <li>Refined modal integration and state handling.</li>
-    <li>Eliminated duplicate like behavior with precise logic updates.</li>
     <li>Enhanced UX through smoother transitions and animation effects.</li>
   </ul>
 
@@ -31,13 +28,13 @@
   <ul>
     <li>Frontend: React, Tailwind CSS, React Icons</li>
     <li>Backend: Firebase Authentication, Firestore</li>
+    <li>Storage: cloudinary</li>
   </ul>
 
   <h2>Future Enhancements</h2>
   <ul>
     <li>Implement infinite scroll and image lazy loading for performance optimization.</li>
     <li>Introduce toast notifications and tooltip enhancements.</li>
-    <li>Refine search filtering using fuzzy logic algorithms.</li>
     <li>Prepare the project for professional portfolio presentation and job-readiness.</li>
   </ul>
 
