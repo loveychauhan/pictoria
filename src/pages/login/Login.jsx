@@ -27,9 +27,9 @@ const Login = ({}) => {
         position: "top-center",
       });
       navigate("/");
-    } catch (error) { 
+    } catch (error) {
       console.log(error.message);
-      toast.error(error.message, {
+      toast.error("Server is failed to login", {
         position: "top-center",
       });
     }
@@ -51,8 +51,8 @@ const Login = ({}) => {
   };
   return createPortal(
     <>
-      <div className="grid h-[80vh] grid-rows-1 place-items-center">
-        <div className="bg-light-gray mx-auto grid w-screen max-w-[320px] gap-3 rounded-[10px] p-4 backdrop-blur">
+      <div className="mx-2 my-1 grid h-[80vh] grid-rows-1 place-items-center">
+        <div className="mx-auto grid w-full max-w-[360px] gap-4 rounded-xl border border-gray-200 bg-[var(--color-mild-gray)] p-6 shadow-md">
           <form
             action=""
             onSubmit={handleSubmit}
@@ -78,14 +78,15 @@ const Login = ({}) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="text-center">
+            <div className="pt-2 text-center">
               <Button text="Login" color="primary" />
             </div>
           </form>
           <div>
-            <p className="text-gray text-center text-[14px]">
-              --Or Continue With--
+            <p className="text-center text-xs text-gray-500">
+              — or continue with —
             </p>
+
             <button
               className="mx-auto mt-1 block w-[70%] cursor-pointer"
               onClick={clickHandler}
@@ -94,14 +95,16 @@ const Login = ({}) => {
             </button>
           </div>
 
-          <p className="text-gray text-end text-[14px]">
-            Not a User {""}
-            <Link to="/register" className="text-blue-500">
+          <p className="text-right text-xs text-gray-500">
+            Not a user?{" "}
+            <Link
+              to="/register"
+              className="text-[var(--color-primary)] hover:underline"
+            >
               Register
             </Link>
           </p>
         </div>
-        <ToastContainer />,
       </div>
     </>,
     document.getElementById("modal-root"),

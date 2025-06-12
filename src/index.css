@@ -1,21 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --color-primary: #4caf50; /*(Fresh Green) → Action buttons, highlights */
-  --color-secondary: #ffc107; /*(Warm Yellow) Accents, notifications */
-  --color-favorites: #e91e63; /*(Vibrant Pink) → Interactive elements like likes*/
+  --color-primary: #6366f1; /* Fresh Green → Action buttons, highlights */
+  --color-secondary: #f59e0b; /* Warm Yellow → Accents, notifications */
+  --color-favorites: #e91e63; /* Vibrant Pink → Interactive elements like likes */
+  --color-background: #fafafa; /* Soft White → Main app background for a clean look */
+  --color-nav-dark: #2c2c2e; /* Light Gray → Subtle separation & depth */
+  --color-light-gray: #e0e0e0; /* Light Gray → Subtle separation & depth */
+  --color-mild-gray: #f5f5f5; /* Light Gray → Subtle separation & depth */
+  --color-gray: #333333; /* Deep Gray → Readable text without being too harsh */
 }
 
-@theme {
-  --color-primary: #4caf50; /*(Fresh Green) → Action buttons, highlights */
-  --color-secondary: #ffc107; /*(Warm Yellow) Accents, notifications */
-  --color-background: #fafafa; /* (Soft White)Main app background for a clean look */
-  --color-favorites: #e91e63; /*(Vibrant Pink) → Interactive elements like likes*/
-  --color-light-gray: #eeeeee; /*(Light Gray) → Subtle separation & depth */
-  --color-gray: #333333; /*(Deep Gray) → Readable text without being too harsh*/
-}
-
-@keyframes gradinentMove {
+@keyframes gradientMove {
   0% {
     background-position: 0% 50%;
   }
@@ -27,14 +23,18 @@
   }
 }
 
-@keyframes wiggle {
+.animate-bounce {
+  animation: bounce 1s ease;
+}
+
+@keyframes settingIcon {
   0% {
-    transform: rotate(-5deg);
-  }
-  50% {
-    transform: rotate(5deg);
+    bottom: 0;
   }
   100% {
-    transform: rotate(-5deg);
+    bottom: 52px;
   }
+}
+.animate-settingIcon {
+  animation: settingIcon 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 }

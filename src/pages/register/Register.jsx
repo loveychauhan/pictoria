@@ -33,66 +33,72 @@ const Register = ({}) => {
       }
     } catch (error) {
       console.log(error.message);
-      toast.error(error.message, {
+      toast.error("Server is failed to create user account", {
         position: "top-center",
       });
     }
   };
 
   return createPortal(
-    <div className="grid h-[80vh] w-screen place-items-center backdrop-blur">
+    <div className="mx-auto flex min-h-screen w-full items-center justify-center px-4 backdrop-blur-sm sm:px-6">
       <form
         action=""
         onSubmit={handleSubmit}
-        className="bg-light-gray mx-auto grid w-full max-w-[320px] gap-3 rounded-[10px] p-4"
+        className="mx-auto grid w-full max-w-[360px] gap-4 rounded-xl border border-gray-200 bg-[var(--color-mild-gray)] p-6 shadow-md"
       >
-        <div className="w-full max-w-[320px]">
-          <label htmlFor="fname">First Name</label>
-          <input
-            type="text"
-            className="bg-background block w-full rounded-[6px] border-1 border-gray-300 p-1 outline-0"
-            placeholder="John"
-            id="fname"
-            onChange={(e) => setFname(e.target.value)}
-          />
-        </div>
-        <div className="w-full max-w-[320px]">
-          <label htmlFor="lname">Last Name</label>
-          <input
-            type="text"
-            className="bg-background block w-full rounded-[6px] border-1 border-gray-300 p-1 outline-0"
-            placeholder="Denver"
-            id="lname"
-            onChange={(e) => setLname(e.target.value)}
-          />
-        </div>
-        <div className="w-full max-w-[320px]">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            className="bg-background block w-full rounded-[6px] border-1 border-gray-300 p-1 outline-0"
-            placeholder="example@g.co"
-            id="email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="w-full max-w-[320px]">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            className="bg-background block w-full rounded-[6px] border-1 border-gray-300 p-1 outline-0"
-            placeholder="*******"
-            id="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="text-center">
+        {[
+          {
+            id: "fname",
+            label: "First Name",
+            setter: setFname,
+            placeholder: "John",
+            type: "text",
+          },
+          {
+            id: "lname",
+            label: "Last Name",
+            setter: setLname,
+            placeholder: "Denver",
+            type: "text",
+          },
+          {
+            id: "email",
+            label: "Email",
+            setter: setEmail,
+            placeholder: "example@g.co",
+            type: "email",
+          },
+          {
+            id: "password",
+            label: "Password",
+            setter: setPassword,
+            placeholder: "*******",
+            type: "password",
+          },
+        ].map(({ id, type, label, placeholder, setter }) => (
+          <div key={id} className="w-full">
+            <label htmlFor={id} className="text-sm text-gray-600">
+              {label}
+            </label>
+            <input
+              type={type}
+              className="bg-background block w-full rounded-[6px] border-1 border-gray-300 p-1 outline-0"
+              placeholder={placeholder}
+              id={id}
+              onChange={(e) => setter(e.target.value)}
+            />
+          </div>
+        ))}
+
+        <div className="pt-2 text-center">
           <Button text="Register" color="primary" />
         </div>
-
-        <p className="text-gray text-end text-[14px]">
-          Already User {""}
-          <Link to="/login" className="text-blue-500">
+        <p className="text-right text-xs text-gray-500">
+          Already a user?{" "}
+          <Link
+            to="/login"
+            className="text-[var(--color-primary)] hover:underline"
+          >
             Login
           </Link>
         </p>

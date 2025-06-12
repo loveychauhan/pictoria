@@ -1,23 +1,11 @@
-import { IoSettingsOutline } from "react-icons/io5";
-import { MdFavorite } from "react-icons/md";
-import { auth } from "../firebase/firebase";
+import FavoriteButton from "./FavoriteButton";
+import Settings from "./Settings";
 
-const Footer = () => {
-  const user = auth.currentUser
-  const favouriteHandler = () => {
-    
-  };
+const Footer = ({ favCollection, settingHandler, settingOpen }) => {
   return (
-    <footer className="fixed bottom-0 mt-1 flex w-full items-center justify-between rounded-tl-[10px] rounded-tr-[10px] bg-gray-200 px-2 py-1">
-      <button title="Favorites" onClick={favouriteHandler}>
-        <MdFavorite className="text-favorites 2s text-[20px] transition-all ease-in-out hover:text-pink-500" />
-      </button>
-      <button
-        className="ease 6s transition-all hover:rotate-45"
-        title="Settings"
-      >
-        <IoSettingsOutline className="text-[20px]" />{" "}
-      </button>
+    <footer className="fixed bottom-0 mt-1 flex w-full items-center justify-between rounded-tl-[10px] rounded-tr-[10px] bg-[var(--color-light-gray)] px-2 py-1 shadow-2xl md:hidden">
+      <FavoriteButton favCollection={favCollection} />
+      <Settings settingHandler={settingHandler} settingOpen={settingOpen} />
     </footer>
   );
 };

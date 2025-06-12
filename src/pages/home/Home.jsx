@@ -1,45 +1,56 @@
-import { useState } from "react";
-import Button from "../../component/Button";
+import { useEffect, useState } from "react";
 import Searchbar from "../../component/Searchbar";
 import UploadModal from "../../component/UploadModal";
-import { Link } from "react-router-dom";
-import useDocData from "../../hooks/useDocData";
-import { CiUser } from "react-icons/ci";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
 import Gallery from "../../component/Gallery";
 import { auth } from "../../firebase/firebase";
 import { toast } from "react-toastify";
 import FilterButton from "../../component/FilterButton";
 import Footer from "../../component/Footer";
+import NavBar from "../../component/NavBar";
+import SideNav from "../../component/SideNav";
 
-const home = ({}) => {
+const Home = ({}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { data, loading } = useDocData("User");
   const [imageURL, setImageURL] = useState(null);
   const [isFile, setIsFile] = useState(false);
   const [filterKey, setFilterKey] = useState();
   const [search, setSearch] = useState("");
   const [openFilter, setOpenFilter] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
+  const [customCollection, setCustomCollection] = useState(false);
+  const [settingOpen, setSettingOpen] = useState(false);
 
-  document.body.style.backgroundColor = "light-gray";
+  useEffect(() => {
+    document.body.style.backgroundColor = "#fafafa";
+  }, []);
 
-  const onclickHandler = (e) => {
+  const uploadHandler = (e) => {
     e.preventDefault();
     if (!auth.currentUser) {
       toast.info("Login to upload images , It's free 😊", {});
       return;
     }
-
     setIsOpen((prev) => !prev);
+  };
+
+  const favCollection = () => {
+    if (!auth.currentUser) {
+      toast.info("Login to see collection, It's free 😊", {
+        position: "top-center",
+      });
+      return;
+    }
+    setCustomCollection((prev) => !prev);
   };
 
   const handleImageUrl = async (e) => {
     const file = e.target.files[0];
     if (!file) {
-      <p className="text-red text-center">No File Present!</p>;
+      toast.warn("No file selected!", { position: "top-center" });
       return;
     }
+
     try {
       setUploadLoading(true);
       const imgUrl = await uploadToCloudinary(file);
@@ -66,71 +77,56 @@ const home = ({}) => {
     setSearch(e.target.value);
   };
 
+  const settingHandler = () => {
+    setSettingOpen((prev) => !prev);
+  };
   return (
-    <>
-      <div className="xs:px-4 px-2 pt-2">
-        <nav className="flex w-full items-center justify-between">
-          <h1 className="text-gray text-2xl font-medium md:text-3xl">
-            Pictoria
-          </h1>
-          <div className="flex gap-3">
-            <Button text="Upload" onclickHandler={onclickHandler} />
-
-            <Link
-              className={`flex w-full max-w-[96px] cursor-pointer place-items-center ${loading ? "" : "mx-auto"} `}
-              to={data ? "/logout" : "/login"}
-            >
-              {data ? (
-                <>
-                  {data?.photo ? (
-                    <div className="h-10 w-10 cursor-pointer rounded-full">
-                      <img
-                        className="h-full w-full rounded-full"
-                        src={data.photo || "./user.png"}
-                        alt="user profile"
-                        onError={(e) => {
-                          e.target.src = "./user.png";
-                        }}
-                      />
-                    </div>
-                  ) : (
-                    <CiUser className="h-9 w-9 rounded-full bg-blue-600 p-1 text-2xl font-medium text-white" />
-                  )}
-                </>
-              ) : (
-                <p className="rounded-[10px] border-[1px] border-gray-400 px-2 py-1.5">
-                  Login
-                </p>
-              )}
-            </Link>
-          </div>
-        </nav>
-        <div className="flex w-full items-center justify-between">
-          {" "}
-          <Searchbar inputHandler={inputHandler} />
-          <FilterButton
-            filterHandler={filterHandler}
-            clickHandler={clickHandler}
-            openFilter={openFilter}
-          />
-        </div>
-      </div>
-      <UploadModal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        onclickHandler={onclickHandler}
-        handleImageUrl={handleImageUrl}
-        imageURL={imageURL}
-        isFile={isFile}
-        setIsFile={setIsFile}
-        uploadLoading={uploadLoading}
+    <div className="h-screen md:flex">
+      <SideNav
+        uploadHandler={uploadHandler}
+        favCollection={favCollection}
+        settingHandler={settingHandler}
+        settingOpen={settingOpen}
       />
-      <main className="hide-scrollbar xs:px-4 max-h-[calc(100vh-128px)] overflow-y-auto scroll-smooth px-2 pt-2">
-        <Gallery imageURL={imageURL} filterKey={filterKey} search={search} />
-      </main>
-      <Footer />
-    </>
+      <div className="w-full">
+        <div className="xs:px-4 px-2 pt-2">
+          <NavBar uploadHandler={uploadHandler} />
+          <div className="flex w-full items-center justify-between">
+            {" "}
+            <Searchbar inputHandler={inputHandler} />
+            <FilterButton
+              filterHandler={filterHandler}
+              clickHandler={clickHandler}
+              openFilter={openFilter}
+            />
+          </div>
+        </div>
+        <UploadModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          uploadHandler={uploadHandler}
+          handleImageUrl={handleImageUrl}
+          imageURL={imageURL}
+          isFile={isFile}
+          setIsFile={setIsFile}
+          uploadLoading={uploadLoading}
+        />
+        <main className="hide-scrollbar xs:px-4 max-h-[calc(100vh-128px)] overflow-y-auto scroll-smooth px-2 pt-2">
+          <Gallery
+            imageURL={imageURL}
+            filterKey={filterKey}
+            search={search}
+            customCollection={customCollection}
+          />
+        </main>
+      </div>
+      <Footer
+        favCollection={favCollection}
+        settingHandler={settingHandler}
+        settingOpen={settingOpen}
+      />
+    </div>
   );
 };
 
-export default home;
+export default Home;

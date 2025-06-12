@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BsFilterRight } from "react-icons/bs";
 
 const FilterButton = ({ filterHandler, clickHandler, openFilter }) => {
@@ -13,7 +12,7 @@ const FilterButton = ({ filterHandler, clickHandler, openFilter }) => {
   return (
     <div className="relative">
       <button className="" title="filter" onClick={clickHandler}>
-        <BsFilterRight className="text-[20px]" />
+        <BsFilterRight className="text-[24px] md:text-3xl" />
       </button>
       {openFilter ? (
         <ul className="absolute right-0 z-50 mt-2 min-w-[64px] overflow-hidden rounded border bg-white shadow-lg">

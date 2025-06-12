@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { MdFavorite } from "react-icons/md";
 import { auth, db } from "../firebase/firebase";
-import { doc } from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
+
 const Favorite = ({ image }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -12,27 +14,39 @@ const Favorite = ({ image }) => {
       setIsFavorite(false);
       return;
     }
-    if (setIsFavorite(image.favorites.includes(auth.currentUser.uid))) {
+    if (image.favorites.includes(auth.currentUser.uid)) {
       setIsFavorite(true);
     }
   }, [auth.currentUser, image.favorites]);
-  const favHandler = () => {
-    const docRef = doc(db, "Images", image.id);
+
+  const favHandler = async () => {
+    const docRef = doc(db, "Image", image.id);
     if (!auth.currentUser) {
-      toast.info("Login to favorite Images , It's free 😊", {
+      toast.info("Login to select favorites, It's free 😊", {
         position: "top-center",
       });
       return;
     }
-
-    console.log(docRef);
-    setIsFavorite((prev) => !prev);
+    try {
+      await updateDoc(docRef, {
+        favorites: isFavorite
+          ? arrayRemove(auth.currentUser.uid)
+          : arrayUnion(auth.currentUser.uid),
+      });
+      setIsFavorite(!isFavorite);
+    } catch (error) {
+      console.error("Error while liking:", error);
+      toast.error("Failed to update like");
+    }
   };
+
   return (
     <button onClick={favHandler}>
       <MdFavorite
         className={`text-[18px] shadow-2xl shadow-gray-800/60 transition-all duration-300 hover:shadow-2xl ${
-          isFavorite ? "text-favorites animate-wiggle" : "text-white"
+          isFavorite
+            ? "animate-bounce text-[var(--color-favorites)]"
+            : "text-white"
         }`}
       />
     </button>

@@ -4,7 +4,6 @@ import { auth, db } from "../firebase/firebase";
 
 const useDocData = (collection) => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
     let unsubscribeAuth;
 
@@ -20,8 +19,6 @@ const useDocData = (collection) => {
       } catch (error) {
         console.error("Error fetching document:", error);
         setData(null);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -30,7 +27,6 @@ const useDocData = (collection) => {
         fetchData(user.uid);
       } else {
         setData(null);
-        setLoading(false);
       }
     });
 
@@ -39,7 +35,7 @@ const useDocData = (collection) => {
     };
   }, [collection]);
 
-  return { data, loading };
+  return { data };
 };
 
 export default useDocData;

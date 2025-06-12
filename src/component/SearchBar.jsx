@@ -1,7 +1,7 @@
 import { IoIosSearch } from "react-icons/io";
-const Searchbar = ({ inputHandler, search }) => {
+const Searchbar = ({ inputHandler }) => {
   return (
-    <div className="bg-background text-gray my-2 flex flex-1 items-center rounded-[10px] px-2 py-1">
+    <div className="bg-light-gray text-gray my-2 flex flex-1 items-center rounded-[10px] px-2 py-1 shadow-2xl md:my-1 md:py-2">
       <IoIosSearch className="text-gray text-xl" />
       <input
         type="text"

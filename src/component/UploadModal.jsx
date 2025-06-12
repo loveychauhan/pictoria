@@ -9,7 +9,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 const UploadModal = ({
   isOpen,
   setIsOpen,
-  onclickHandler,
+  uploadHandler,
   handleImageUrl,
   imageURL,
   isFile,
@@ -122,7 +122,7 @@ const UploadModal = ({
               </div>
             </div>
             <div className="flex justify-center gap-2">
-              <Button text="Cancel" onclickHandler={onclickHandler} />
+              <Button text="Cancel" uploadHandler={uploadHandler} />
               <Button text="Upload" color="primary" />
             </div>
           </form>
