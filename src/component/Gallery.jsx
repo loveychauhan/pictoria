@@ -53,15 +53,27 @@ const Gallery = ({ filterKey, search, customCollection, isDark }) => {
   }, [filterKey, images, search, customCollection, user]);
 
   return (
-    <Masonry
-      breakpointCols={breakpoints}
-      className="flex w-full gap-4"
-      columnClassName="space-y-4"
-    >
-      {filteredData?.map((img) => (
-        <ImageRendering key={img.id} img={img} isDark={isDark} />
-      ))}
-    </Masonry>
+    <>
+      {" "}
+      {filteredData.length > 0 ? (
+        <Masonry
+          breakpointCols={breakpoints}
+          className="flex w-full gap-4"
+          columnClassName="space-y-4"
+        >
+          {filteredData?.map((img) => (
+            <ImageRendering key={img.id} img={img} isDark={isDark} />
+          ))}
+        </Masonry>
+      ) : (
+        <div className="flex h-[80vh] flex-col items-center justify-center text-gray-500">
+          <p className="text-lg">No images to display</p>
+          <p className="text-sm text-gray-400">
+            Try uploading or changing filters
+          </p>
+        </div>
+      )}
+    </>
   );
 };
 
