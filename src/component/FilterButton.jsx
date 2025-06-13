@@ -1,6 +1,6 @@
 import { BsFilterRight } from "react-icons/bs";
 
-const FilterButton = ({ filterHandler, clickHandler, openFilter }) => {
+const FilterButton = ({ filterHandler, clickHandler, openFilter, isDark }) => {
   const filtersOptions = [
     "Most Liked",
     "Landscape",
@@ -11,7 +11,12 @@ const FilterButton = ({ filterHandler, clickHandler, openFilter }) => {
 
   return (
     <div className="relative">
-      <button className="" title="filter" onClick={clickHandler}>
+      <button
+        className=""
+        title="filter"
+        onClick={clickHandler}
+        style={{ color: isDark ? "#e0e0e0" : "#2c2c2c" }}
+      >
         <BsFilterRight className="text-[24px] md:text-3xl" />
       </button>
       {openFilter ? (

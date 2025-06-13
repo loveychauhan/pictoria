@@ -7,7 +7,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { createPortal } from "react-dom";
 import { toast, ToastContainer } from "react-toastify";
 
-const Register = ({}) => {
+const Register = ({ isDark }) => {
   const [fname, setFname] = useState(null);
   const [lname, setLname] = useState(null);
   const [email, setEmail] = useState(null);
@@ -25,6 +25,7 @@ const Register = ({}) => {
           lname: lname,
           email: user.email,
           photo: null,
+          isDark: false,
         });
         toast.success("User Logged In Successfully", {
           position: "top-center",
@@ -44,7 +45,11 @@ const Register = ({}) => {
       <form
         action=""
         onSubmit={handleSubmit}
-        className="mx-auto grid w-full max-w-[360px] gap-4 rounded-xl border border-gray-200 bg-[var(--color-mild-gray)] p-6 shadow-md"
+        className={`mx-auto grid w-full max-w-[360px] gap-4 rounded-xl border p-6 shadow-md transition-all duration-300 ${
+          isDark
+            ? "border-[#3a3a3c] bg-[#1c1c1e] text-gray-100"
+            : "border-[#d1d5db] bg-[#f3f4f6] text-[#2c2c2e]"
+        } `}
       >
         {[
           {
@@ -82,7 +87,11 @@ const Register = ({}) => {
             </label>
             <input
               type={type}
-              className="bg-background block w-full rounded-[6px] border-1 border-gray-300 p-1 outline-0"
+              className={`mt-1 w-full rounded-md border px-3 py-2 transition outline-none ${
+                isDark
+                  ? "border-[#3a3a3c] bg-[#2c2c2e] text-gray-100 placeholder-gray-400"
+                  : "border-gray-300 bg-white text-gray-800 placeholder-gray-500"
+              } `}
               placeholder={placeholder}
               id={id}
               onChange={(e) => setter(e.target.value)}
@@ -97,7 +106,9 @@ const Register = ({}) => {
           Already a user?{" "}
           <Link
             to="/login"
-            className="text-[var(--color-primary)] hover:underline"
+            className={`font-medium hover:underline ${
+              isDark ? "text-[#38bdf8]" : "text-blue-500"
+            }`}
           >
             Login
           </Link>

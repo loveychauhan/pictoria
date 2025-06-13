@@ -3,14 +3,17 @@ import { RiLogoutCircleFill } from "react-icons/ri";
 import { RiLightbulbFlashFill } from "react-icons/ri";
 import { auth } from "../firebase/firebase";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Settings = ({ settingHandler, settingOpen }) => {
+const Settings = ({ settingHandler, settingOpen, darkModeHandler, isDark }) => {
   const [isUser, setIsUser] = useState(false);
 
-  if (auth.currentUser) {
-    setIsUser((prev = !prev));
-  }
+  useEffect(() => {
+    if (auth.currentUser) {
+      setIsUser((prev) => !prev);
+    }
+  }, []);
+
   const logoutHandler = async () => {
     try {
       await auth.signOut();
@@ -24,17 +27,22 @@ const Settings = ({ settingHandler, settingOpen }) => {
       });
     }
   };
+
   return (
     <div className="relative">
       <button
         title="Settings"
-        className="rounded-full p-2 transition duration-300 hover:rotate-45 hover:bg-[var(--color-background)]"
+        className="rounded-full p-2 transition duration-300 hover:rotate-45"
+        style={{ color: isDark ? "#e0e0e0" : "#1c1c1e" }}
         onClick={settingHandler}
       >
-        <IoSettingsOutline className="text-[20px] text-[var(--color-gray)] transition-colors duration-300 hover:text-[var(--color-secondary)] md:text-3xl" />
+        <IoSettingsOutline className="text-[20px] transition-colors duration-300 hover:text-[var(--color-secondary)] md:text-3xl" />
       </button>
       {settingOpen ? (
-        <div className="animate-settingIcon absolute right-0 bottom-16 rounded-lg bg-[var(--color-light-gray)] px-2 py-3 text-[var(--color-primary)] shadow-lg">
+        <div
+          className="animate-settingIcon absolute right-0 bottom-16 rounded-lg bg-[var(--color-light-gray)] px-2 py-3 text-[var(--color-primary)] shadow-lg"
+          style={{ backgroundColor: isDark ? "#94a3b8" : "#e0e0e0" }}
+        >
           <ul className="flex flex-col items-center gap-3 text-2xl text-gray-400 md:text-2xl md:text-3xl">
             <li>
               {isUser ? (
@@ -51,8 +59,10 @@ const Settings = ({ settingHandler, settingOpen }) => {
             </li>
             <li>
               <button
-                className="rounded-full transition duration-300 hover:text-yellow-400"
+                className="rounded-full transition duration-300"
+                style={{ color: isDark ? "#f5de0b" : "#1c1c1e" }}
                 title="Inspire"
+                onClick={darkModeHandler}
               >
                 <RiLightbulbFlashFill />
               </button>

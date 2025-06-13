@@ -4,7 +4,7 @@ import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { toast } from "react-toastify";
 
-const Like = ({ image }) => {
+const Like = ({ image, isDark }) => {
   const [likeCount, setLikeCount] = useState(image.likeCount || 0);
   const [isLiked, setIsLiked] = useState(false);
 
@@ -51,12 +51,21 @@ const Like = ({ image }) => {
         onClick={likeHandler}
         className="flex items-center gap-1 px-1 py-1"
       >
-        <p className="text-[14px] leading-none font-medium text-white">
+        <p
+          className="text-[14px] leading-none font-medium"
+          style={{
+            color: isDark ? "#ffffff" : "#2c2c2c",
+          }}
+        >
           {likeCount}
         </p>
         <BiSolidLike
           className={`text-[18px] transition-all duration-300 hover:shadow-2xl ${
-            isLiked ? "text-blue-600" : "text-white"
+            isLiked
+              ? "text-blue-600"
+              : isDark
+                ? "text-[#fefefe]"
+                : "text-[#4A4A4A]"
           }`}
         />
       </button>

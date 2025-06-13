@@ -8,7 +8,7 @@ const LoginLogoutChecker = () => {
   return (
     <div>
       <Link
-        className={`flex w-full max-w-[96px] items-center justify-center rounded-full bg-[var(--color-light-gray)] shadow-sm transition-all duration-200 hover:shadow-md ${loading ? "" : "mx-auto"}`}
+        className={`flex w-full max-w-[96px] items-center justify-center rounded-full shadow-sm transition-all duration-200 hover:shadow-md ${loading ? "" : "mx-auto"}`}
         to={data ? "/logout" : "/login"}
         title={data ? `${data.fname}\n${data.email}` : "Login"}
       >

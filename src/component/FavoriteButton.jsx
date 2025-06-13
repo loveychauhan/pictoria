@@ -1,6 +1,6 @@
 import { MdFavorite } from "react-icons/md";
 
-const FavoriteButton = ({ favCollection }) => {
+const FavoriteButton = ({ favCollection}) => {
   return (
     <button
       title="Favorites"

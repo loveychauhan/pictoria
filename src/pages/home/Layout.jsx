@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Searchbar from "../../component/Searchbar";
 import UploadModal from "../../component/UploadModal";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
-import Gallery from "../../component/Gallery";
 import { auth } from "../../firebase/firebase";
 import { toast } from "react-toastify";
 import FilterButton from "../../component/FilterButton";
 import Footer from "../../component/Footer";
 import NavBar from "../../component/NavBar";
 import SideNav from "../../component/SideNav";
+import { Outlet } from "react-router";
 
-const Home = ({}) => {
+const Layout = ({ isDark, darkModeHandler }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [imageURL, setImageURL] = useState(null);
   const [isFile, setIsFile] = useState(false);
@@ -20,10 +20,6 @@ const Home = ({}) => {
   const [uploadLoading, setUploadLoading] = useState(false);
   const [customCollection, setCustomCollection] = useState(false);
   const [settingOpen, setSettingOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.style.backgroundColor = "#fafafa";
-  }, []);
 
   const uploadHandler = (e) => {
     e.preventDefault();
@@ -50,11 +46,9 @@ const Home = ({}) => {
       toast.warn("No file selected!", { position: "top-center" });
       return;
     }
-
     try {
       setUploadLoading(true);
       const imgUrl = await uploadToCloudinary(file);
-      console.log(imageURL);
       setImageURL(imgUrl);
       if (imageURL) setIsFile(true);
     } catch (error) {
@@ -80,6 +74,7 @@ const Home = ({}) => {
   const settingHandler = () => {
     setSettingOpen((prev) => !prev);
   };
+
   return (
     <div className="h-screen md:flex">
       <SideNav
@@ -87,17 +82,20 @@ const Home = ({}) => {
         favCollection={favCollection}
         settingHandler={settingHandler}
         settingOpen={settingOpen}
+        darkModeHandler={darkModeHandler}
+        isDark={isDark}
       />
       <div className="w-full">
         <div className="xs:px-4 px-2 pt-2">
-          <NavBar uploadHandler={uploadHandler} />
+          <NavBar uploadHandler={uploadHandler} isDark={isDark} />
           <div className="flex w-full items-center justify-between">
             {" "}
-            <Searchbar inputHandler={inputHandler} />
+            <Searchbar inputHandler={inputHandler} isDark={isDark} />
             <FilterButton
               filterHandler={filterHandler}
               clickHandler={clickHandler}
               openFilter={openFilter}
+              isDark={isDark}
             />
           </div>
         </div>
@@ -110,23 +108,21 @@ const Home = ({}) => {
           isFile={isFile}
           setIsFile={setIsFile}
           uploadLoading={uploadLoading}
+          isDark={isDark}
         />
         <main className="hide-scrollbar xs:px-4 max-h-[calc(100vh-128px)] overflow-y-auto scroll-smooth px-2 pt-2">
-          <Gallery
-            imageURL={imageURL}
-            filterKey={filterKey}
-            search={search}
-            customCollection={customCollection}
-          />
+          <Outlet context={{ filterKey, search, customCollection, isDark }} />
         </main>
       </div>
       <Footer
         favCollection={favCollection}
         settingHandler={settingHandler}
         settingOpen={settingOpen}
+        darkModeHandler={darkModeHandler}
+        isDark={isDark}
       />
     </div>
   );
 };
 
-export default Home;
+export default Layout;

@@ -3,10 +3,12 @@ import ImageRendering from "./ImageRendering";
 import useImages from "../hooks/useImages";
 import { useEffect, useState } from "react";
 import { auth } from "../firebase/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
-const Gallery = ({ filterKey, search, customCollection }) => {
+const Gallery = ({ filterKey, search, customCollection, isDark }) => {
   const { images } = useImages();
   const [filteredData, setFilteredData] = useState([]);
+  const [user, setUser] = useState(null);
 
   const breakpoints = {
     default: 6,
@@ -15,7 +17,13 @@ const Gallery = ({ filterKey, search, customCollection }) => {
     400: 1,
   };
 
-  const user = auth.currentUser;
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     const key = filterKey?.toLowerCase();
@@ -51,7 +59,7 @@ const Gallery = ({ filterKey, search, customCollection }) => {
       columnClassName="space-y-4"
     >
       {filteredData?.map((img) => (
-        <ImageRendering key={img.id} img={img} />
+        <ImageRendering key={img.id} img={img} isDark={isDark} />
       ))}
     </Masonry>
   );

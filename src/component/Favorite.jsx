@@ -4,10 +4,8 @@ import { auth, db } from "../firebase/firebase";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 
-const Favorite = ({ image }) => {
+const Favorite = ({ image, isDark }) => {
   const [isFavorite, setIsFavorite] = useState(false);
-
-  //   console.log(image.id);
 
   useEffect(() => {
     if (!auth.currentUser) {
@@ -46,7 +44,9 @@ const Favorite = ({ image }) => {
         className={`text-[18px] shadow-2xl shadow-gray-800/60 transition-all duration-300 hover:shadow-2xl ${
           isFavorite
             ? "animate-bounce text-[var(--color-favorites)]"
-            : "text-white"
+            : isDark
+              ? "text-[#fefefe]"
+              : "text-[#4A4A4A]"
         }`}
       />
     </button>

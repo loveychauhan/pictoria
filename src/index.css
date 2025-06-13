@@ -11,6 +11,10 @@
   --color-gray: #333333; /* Deep Gray → Readable text without being too harsh */
 }
 
+@theme {
+  --breakpoint-xs: 480px;
+}
+
 @keyframes gradientMove {
   0% {
     background-position: 0% 50%;

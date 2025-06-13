@@ -14,9 +14,11 @@ const UploadModal = ({
   imageURL,
   isFile,
   uploadLoading,
+  isDark,
 }) => {
   const [name, setName] = useState("");
   const [tag, setTag] = useState("");
+
   if (isOpen) {
     document.body.style.overflow = "hidden";
   } else {
@@ -59,7 +61,11 @@ const UploadModal = ({
         <div className="fixed inset-0 z-50 grid place-items-center p-2 backdrop-blur">
           <form
             onSubmit={submitHandler}
-            className="bg-light-gray relative mx-auto grid w-full max-w-sm gap-4 rounded-xl p-4"
+            className="relative mx-auto grid w-full max-w-sm gap-4 rounded-xl bg-[var(--color-light-gray)] p-4"
+            style={{
+              backgroundColor: isDark ? "#2c2c2e" : "#e0e0e0",
+              color: !isDark ? "#2c2c2e" : "#e0e0e0",
+            }}
           >
             <h2 className="text-center text-2xl font-medium">Upload a Photo</h2>
             <input
@@ -72,14 +78,17 @@ const UploadModal = ({
             />
             <label
               htmlFor="img"
-              className="flex cursor-pointer items-center justify-center gap-1 rounded-lg border-2 border-gray-300 bg-gray-100 px-6 py-3 text-gray-700 transition duration-300 hover:bg-gray-200"
+              className={`flex cursor-pointer items-center justify-center gap-1 rounded-lg border-2 px-6 py-3 transition duration-300 ${
+                isDark
+                  ? "border-[#3a3a3c] bg-[#1c1c1c] text-[#f3f4f6] hover:bg-[#2c2c2e]"
+                  : "border-[#d1d5db] bg-[#f3f4f6] text-[#2c2c2e] hover:bg-[#e5e7eb]"
+              } `}
             >
               {!uploadLoading ? (
                 <>
                   {" "}
                   {isFile ? (
                     <p className="flex gap-1">
-                      {" "}
                       <RiFolderCheckFill className="text-2xl text-[#FCD34D]" />{" "}
                       Select Image
                     </p>
@@ -113,7 +122,9 @@ const UploadModal = ({
                     type="button"
                     onClick={handleTagClick}
                     className={`cursor-pointer rounded-[6px] border border-gray-400 px-1.5 py-0.5 text-sm ${
-                      tag === `${item}` ? "bg-favorites text-white" : ""
+                      tag === `${item}`
+                        ? "bg-[var(--color-favorites)] text-white"
+                        : ""
                     }`}
                   >
                     #{item}
