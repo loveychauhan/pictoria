@@ -1,33 +1,7 @@
 import { IoSettingsOutline } from "react-icons/io5";
-import { RiLogoutCircleFill } from "react-icons/ri";
 import { RiLightbulbFlashFill } from "react-icons/ri";
-import { auth } from "../firebase/firebase";
-import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
 
 const Settings = ({ settingHandler, settingOpen, darkModeHandler, isDark }) => {
-  const [isUser, setIsUser] = useState(false);
-
-  useEffect(() => {
-    if (auth.currentUser) {
-      setIsUser((prev) => !prev);
-    }
-  }, []);
-
-  const logoutHandler = async () => {
-    try {
-      await auth.signOut();
-      toast.success("Logout Successfully", {
-        position: "top-center",
-      });
-      navigate("/");
-    } catch (error) {
-      toast.error(error.message, {
-        position: "top-center",
-      });
-    }
-  };
-
   return (
     <div className="relative">
       <button
@@ -44,19 +18,6 @@ const Settings = ({ settingHandler, settingOpen, darkModeHandler, isDark }) => {
           style={{ backgroundColor: isDark ? "#94a3b8" : "#e0e0e0" }}
         >
           <ul className="flex flex-col items-center gap-3 text-2xl text-gray-400 md:text-2xl md:text-3xl">
-            <li>
-              {isUser ? (
-                <button
-                  className="rounded-full transition duration-300 hover:bg-[var(--color-surface)] hover:text-yellow-400"
-                  title="Logout"
-                  onClick={logoutHandler}
-                >
-                  <RiLogoutCircleFill />
-                </button>
-              ) : (
-                ""
-              )}
-            </li>
             <li>
               <button
                 className="rounded-full transition duration-300"
