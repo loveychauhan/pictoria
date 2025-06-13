@@ -110,7 +110,7 @@ const Layout = ({ isDark, darkModeHandler }) => {
           uploadLoading={uploadLoading}
           isDark={isDark}
         />
-        <main className="hide-scrollbar xs:px-4 max-h-[calc(100vh-128px)] overflow-y-auto scroll-smooth px-2 pt-2">
+        <main className="hide-scrollbar xs:px-4 max-h-[calc(100vh-128px)] overflow-y-auto scroll-smooth px-2 pt-2 pb-1">
           <Outlet context={{ filterKey, search, customCollection, isDark }} />
         </main>
       </div>
