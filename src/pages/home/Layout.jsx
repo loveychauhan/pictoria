@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Searchbar from "../../component/Searchbar";
 import UploadModal from "../../component/UploadModal";
+import Searchbar from "../../component/SearchBar";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
 import { auth } from "../../firebase/firebase";
 import { toast } from "react-toastify";

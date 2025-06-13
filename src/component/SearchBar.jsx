@@ -1,5 +1,5 @@
 import { IoIosSearch } from "react-icons/io";
-const Searchbar = ({ inputHandler, isDark }) => {
+const SearchBar = ({ inputHandler, isDark }) => {
   return (
     <div
       className="bg-light-gray text-gray my-2 flex flex-1 items-center rounded-[10px] px-2 py-1 md:my-1 md:py-2"
@@ -16,4 +16,4 @@ const Searchbar = ({ inputHandler, isDark }) => {
   );
 };
 
-export default Searchbar;
+export default SearchBar;
