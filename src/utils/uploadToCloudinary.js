@@ -20,6 +20,7 @@ export const uploadToCloudinary = async (file) => {
       toast.error("Image Failed to generate Url...", {
         position: "top-center",
       });
+      return false
     }
     return [data.secure_url];
   } catch (error) {

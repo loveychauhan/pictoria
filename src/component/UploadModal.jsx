@@ -12,7 +12,6 @@ const UploadModal = ({
   uploadHandler,
   handleImageUrl,
   imageURL,
-  isFile,
   uploadLoading,
   isDark,
 }) => {
@@ -85,17 +84,21 @@ const UploadModal = ({
               } `}
             >
               {!uploadLoading ? (
-                <>
-                  {" "}
-                  {isFile ? (
-                    <p className="flex gap-1">
-                      <RiFolderCheckFill className="text-2xl text-[#FCD34D]" />{" "}
-                      Select Image
-                    </p>
-                  ) : (
-                    "📁 Select Image"
-                  )}{" "}
-                </>
+                imageURL ? (
+                  <p className="flex items-center gap-2">
+                    <img
+                      src={imageURL}
+                      alt="image available"
+                      className="w-[40px] object-cover"
+                    />
+                    <span>Image Selected</span>
+                  </p>
+                ) : (
+                  <p className="flex items-center gap-1">
+                    <span role="img">📁</span>
+                    <span>Select Image</span>
+                  </p>
+                )
               ) : (
                 <AiOutlineLoading3Quarters className="animate-spin text-xl font-medium text-[#FCD34D] transition-all ease-in-out" />
               )}

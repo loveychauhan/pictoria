@@ -29,7 +29,6 @@ const Layout = ({ isDark, darkModeHandler }) => {
     }
     setIsOpen((prev) => !prev);
   };
-
   const favCollection = () => {
     if (!auth.currentUser) {
       toast.info("Login to see collection, It's free 😊", {
@@ -50,7 +49,6 @@ const Layout = ({ isDark, darkModeHandler }) => {
       setUploadLoading(true);
       const imgUrl = await uploadToCloudinary(file);
       setImageURL(imgUrl);
-      if (imageURL) setIsFile(true);
     } catch (error) {
       console.log("upload failed");
     } finally {
