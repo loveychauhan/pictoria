@@ -1,45 +1,61 @@
+# Pictoria 🎨
 
-<body>
+Pictoria is a simple image-sharing web app, kind of like a mini Pinterest. Users can sign up, log in, and upload their favorite pictures. The app displays the images in a clean, responsive grid layout. I built this to practice React and get more comfortable with Firebase and Cloudinary.
 
-  <h1>Pictoria: Modern Image Gallery Application</h1>
-  <p><strong>Version:</strong> In Progress<br/>
-     <strong>Author:</strong> Lovey</p>
+---
 
-  <h2>Overview</h2>
-  <p>Pictoria is a modern, responsive web application developed using React, Firebase, and Tailwind CSS. 
-     Designed with a focus on aesthetics and performance, it enables users to upload and interact with images through features such as liking, favoriting, and categorization—available exclusively to authenticated users.</p>
+### 🔗 Live Demo
 
-  <h2>Core Features</h2>
-  <ul>
-    <li><strong>Like Functionality:</strong> Prevents duplicate likes and tracks user interactions.</li>
-    <li><strong>User Authentication:</strong> Secures sensitive actions like uploading, liking, and favoriting.</li>
-    <li><strong>Search Filters:</strong> Allows users to efficiently discover relevant images.</li>
-    <li><strong>Responsive Layouts:</strong> Fully optimized for various screen sizes and devices.</li>
-  </ul>
+👉 [https://pictoria-web.netlify.app](https://pictoria-web.netlify.app)
 
-  <h2>Recent Updates</h2>
-  <ul>
-    <li>Resolved Firebase document creation inconsistencies.</li>
-    <li>Refined modal integration and state handling.</li>
-    <li>Enhanced UX through smoother transitions and animation effects.</li>
-  </ul>
+---
 
-  <h2>Technology Stack</h2>
-  <ul>
-    <li>Frontend: React, Tailwind CSS, React Icons</li>
-    <li>Backend: Firebase Authentication, Firestore</li>
-    <li>Storage: cloudinary</li>
-  </ul>
+## 🚀 Features
 
-  <h2>Future Enhancements</h2>
-  <ul>
-    <li>Implement infinite scroll and image lazy loading for performance optimization.</li>
-    <li>Introduce toast notifications and tooltip enhancements.</li>
-    <li>Prepare the project for professional portfolio presentation and job-readiness.</li>
-  </ul>
+- User signup and login using Firebase Auth
+- Upload images directly to Cloudinary
+- Store image details (title, tags, URLs) in Firestore
+- View all uploaded images on the homepage
+- Basic image grid layout (working on making it more responsive)
+- Protected upload route (only logged-in users can upload)
 
-  <h2>Author’s Note</h2>
-  <p>This project reflects my dedication to building creative, intuitive, and scalable frontend applications. Feedback, suggestions, or collaboration inquiries are always welcome.</p>
+---
 
-</body>
-</html>
+## 🛠 Tech Stack
+
+- **React** – Frontend framework
+- **Firebase Auth** – User login/logout
+- **Firestore** – Store image metadata
+- **Cloudinary** – Image uploads and hosting
+- **React Router** – Routing
+- **CSS / Basic Styling** – May switch to Tailwind later
+- **Netlify** – Hosting
+
+---
+
+## 💡 Why I Built It
+
+I wanted to build something more realistic than to-do lists and calculators — something visual and fun. This project helped me learn how to connect Firebase authentication with real-time image uploads, and how to work with external services like Cloudinary.
+
+---
+
+## 📸 Screenshots
+
+### Homepage (Desktop)
+
+![Homepage](./assets/homepage.png)
+
+### Homepage (Mobile)
+
+![Homepage Mobile](./assets/homepageMobile.png)
+
+---
+
+## 🙋‍♂️ Contact
+
+If you have feedback or just want to connect, feel free to reach out:
+
+- **Name**: Lovey Singh Chauhan
+- **LinkedIn**: [linkedin.com/in/loveychauhan01](https://www.linkedin.com/in/loveychauhan01)
+- **Email**: loveychauhan68363@gmail.com
+- **GitHub Repo**: [github.com/loveychauhan/pictoria](https://github.com/loveychauhan/pictoria)
