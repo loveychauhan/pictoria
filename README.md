@@ -16,7 +16,7 @@ Pictoria is a simple image-sharing web app, kind of like a mini Pinterest. Users
 - Upload images directly to Cloudinary
 - Store image details (title, tags, URLs) in Firestore
 - View all uploaded images on the homepage
-- Basic image grid layout (working on making it more responsive)
+- Basic image grid layout 
 - Protected upload route (only logged-in users can upload)
 
 ---

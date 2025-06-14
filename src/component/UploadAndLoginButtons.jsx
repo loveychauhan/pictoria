@@ -9,7 +9,7 @@ const UploadAndLoginButtons = ({ uploadHandler }) => {
       <Button
         text="Upload"
         Icon={
-          <MdAddCircle className="text-4xl text-[var(--color-primary)] transition-colors duration-300 hover:text-[var(--color-secondary)] md:text-4xl" />
+          <MdAddCircle className="text-4xl text-[var(--color-primary)] transition-colors duration-300 hover:text-[var(--color-secondary)]" />
         }
         uploadHandler={uploadHandler}
       />
