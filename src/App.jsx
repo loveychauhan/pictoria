@@ -32,7 +32,6 @@ function App() {
     setIsDark(newTheme);
 
     if (!auth.currentUser) {
-      console.log("No user logged in");
       return;
     }
 
