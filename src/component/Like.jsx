@@ -52,7 +52,7 @@ const Like = ({ image, isDark }) => {
         className="flex items-center gap-1 px-1 py-1"
       >
         <p
-          className="align-middle text-[14px] leading-tight font-medium"
+          className="pt-0.5 align-middle text-[14px] leading-tight font-medium"
           style={{
             color: isDark ? "#ffffff" : "#2c2c2c",
           }}
