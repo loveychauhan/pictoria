@@ -52,7 +52,7 @@ const Like = ({ image, isDark }) => {
         className="flex items-center gap-1 px-1 py-1"
       >
         <p
-          className="text-[14px] leading-none font-medium"
+          className="align-middle text-[14px] leading-tight font-medium"
           style={{
             color: isDark ? "#ffffff" : "#2c2c2c",
           }}
@@ -60,7 +60,7 @@ const Like = ({ image, isDark }) => {
           {likeCount}
         </p>
         <BiSolidLike
-          className={`text-[18px] transition-all duration-300 hover:shadow-2xl ${
+          className={`align-middle text-[18px] transition-all duration-300 hover:shadow-2xl ${
             isLiked
               ? "text-blue-600"
               : isDark
