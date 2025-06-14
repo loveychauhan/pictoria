@@ -1,6 +1,6 @@
 # Pictoria 🎨
 
-Pictoria is a simple image-sharing web app, kind of like a mini Pinterest. Users can sign up, log in, and upload their favorite pictures. The app displays the images in a clean, responsive grid layout. I built this to practice React and get more comfortable with Firebase and Cloudinary.
+Pictoria is a mordern image-sharing web app. Users can sign up, log in, and upload their favorite pictures. The app displays the images in a clean, responsive grid layout. I built this to practice React and get more comfortable with Firebase and Cloudinary.
 
 ---
 
@@ -16,7 +16,7 @@ Pictoria is a simple image-sharing web app, kind of like a mini Pinterest. Users
 - Upload images directly to Cloudinary
 - Store image details (title, tags, URLs) in Firestore
 - View all uploaded images on the homepage
-- Basic image grid layout 
+- Advanvce UI and image grid layout
 - Protected upload route (only logged-in users can upload)
 
 ---
@@ -28,7 +28,7 @@ Pictoria is a simple image-sharing web app, kind of like a mini Pinterest. Users
 - **Firestore** – Store image metadata
 - **Cloudinary** – Image uploads and hosting
 - **React Router** – Routing
-- **CSS / Basic Styling** – May switch to Tailwind later
+- **Tailwind CSS** – Styling and Responsive design
 - **Netlify** – Hosting
 
 ---
@@ -43,11 +43,11 @@ I wanted to build something more realistic than to-do lists and calculators — 
 
 ### Homepage (Desktop)
 
-![Homepage](./assets/homepage.png)
+![Homepage](src/assets/homepage.png)
 
 ### Homepage (Mobile)
 
-![Homepage Mobile](./assets/homepageMobile.png)
+![Homepage Mobile](src/assets/homepageMobile.png)
 
 ---
 
