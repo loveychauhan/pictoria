@@ -3,7 +3,6 @@ import Button from "./Button";
 import { useState } from "react";
 import { auth, db } from "../firebase/firebase";
 import { setDoc, doc, collection } from "firebase/firestore";
-import { RiFolderCheckFill } from "react-icons/ri";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const UploadModal = ({
