@@ -6,9 +6,10 @@ import { auth } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 const Gallery = ({ filterKey, search, customCollection, isDark }) => {
-  const { images } = useImages();
+  const { images, loading } = useImages();
   const [filteredData, setFilteredData] = useState([]);
   const [user, setUser] = useState(null);
+  console.log(filteredData);
 
   const breakpoints = {
     default: 6,
@@ -52,10 +53,46 @@ const Gallery = ({ filterKey, search, customCollection, isDark }) => {
     setFilteredData(updated);
   }, [filterKey, images, search, customCollection, user]);
 
+  const thumbnails = Array.from({ length: 20 });
+
   return (
     <>
-      {" "}
-      {filteredData.length > 0 ? (
+      {loading ? (
+        <Masonry
+          breakpointCols={breakpoints}
+          className="flex w-full gap-4"
+          columnClassName="space-y-4"
+        >
+          {thumbnails.map((render, index) => (
+            <div
+              key={index}
+              className="h-[200px] w-full  animate-pulse rounded-xl bg-gradient-to-r from-neutral-300 to-zinc-300 shadow-md"
+            ></div>
+          ))}
+        </Masonry>
+      ) : (
+        <>
+          {filteredData.length > 0 ? (
+            <Masonry
+              breakpointCols={breakpoints}
+              className="flex w-full gap-4"
+              columnClassName="space-y-4"
+            >
+              {filteredData?.map((img) => (
+                <ImageRendering key={img.id} img={img} isDark={isDark} />
+              ))}
+            </Masonry>
+          ) : (
+            <div className="flex h-[80vh] flex-col items-center justify-center text-gray-500">
+              <p className="text-lg">No images to display</p>
+              <p className="text-sm text-gray-400">
+                Try uploading or changing filters
+              </p>
+            </div>
+          )}
+        </>
+      )}
+      {/* {filteredData.length > 0 ? (
         <Masonry
           breakpointCols={breakpoints}
           className="flex w-full gap-4"
@@ -72,7 +109,7 @@ const Gallery = ({ filterKey, search, customCollection, isDark }) => {
             Try uploading or changing filters
           </p>
         </div>
-      )}
+      )} */}
     </>
   );
 };

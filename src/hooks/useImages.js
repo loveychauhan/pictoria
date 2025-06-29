@@ -5,6 +5,9 @@ import { toast } from "react-toastify";
 
 const useImages = () => {
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true)
+  // console.log(loading)
+
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "Image"),
@@ -15,10 +18,11 @@ const useImages = () => {
         }));
 
         const filtered = imageContainer.filter((img) =>
-          Array.isArray(img.url) // or typeof img.url === 'string' depending on your schema
+          Array.isArray(img.url)
         );
 
         setImages(filtered);
+        setLoading(false)
       },
       (error) => {
         toast.error("Image failing to load", {
@@ -31,7 +35,7 @@ const useImages = () => {
     return () => unsubscribe();
   }, [])
 
-  return { images };
+  return { images, loading };
 };
 
 export default useImages;

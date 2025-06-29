@@ -55,7 +55,7 @@ I wanted to build something more realistic than to-do lists and calculators — 
 
 If you have feedback or just want to connect, feel free to reach out:
 
-- **Name**: Lovey Singh Chauhan
+- **Name**: Lovey Singh Chauhan.
 - **LinkedIn**: [linkedin.com/in/loveychauhan01](https://www.linkedin.com/in/loveychauhan01)
 - **Email**: loveychauhan68363@gmail.com
 - **GitHub Repo**: [github.com/loveychauhan/pictoria](https://github.com/loveychauhan/pictoria)
