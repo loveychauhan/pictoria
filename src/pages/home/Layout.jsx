@@ -20,6 +20,7 @@ const Layout = ({ isDark, darkModeHandler }) => {
   const [uploadLoading, setUploadLoading] = useState(false);
   const [customCollection, setCustomCollection] = useState(false);
   const [settingOpen, setSettingOpen] = useState(false);
+  
 
   const uploadHandler = (e) => {
     e.preventDefault();

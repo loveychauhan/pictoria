@@ -6,7 +6,7 @@ Pictoria is a mordern image-sharing web app. Users can sign up, log in, and uplo
 
 ### 🔗 Live Demo
 
-👉 [https://pictoria-web.netlify.app](https://pictoria-web.netlify.app)
+👉 [https://pictoria-web.netlify.app]
 
 ---
 

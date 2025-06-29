@@ -22,7 +22,6 @@ const Login = ({ isDark }) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      console.log("user logged in successfully");
       toast.success("User Logged In Successfully", {
         position: "top-center",
       });

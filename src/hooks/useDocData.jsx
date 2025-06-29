@@ -4,6 +4,7 @@ import { auth, db } from "../firebase/firebase";
 
 const useDocData = (collection) => {
   const [data, setData] = useState(null);
+  
   useEffect(() => {
     let unsubscribeAuth;
 
