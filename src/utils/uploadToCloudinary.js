@@ -13,7 +13,8 @@ export const uploadToCloudinary = async (file) => {
       },
     );
     const data = await response.json();
-    console.log(data)
+    const imageURL = data.secure_url
+    const optimizedUrl = imageURL.replace("/upload/", "/upload/f_auto,q_auto,w_800/");
 
     if (!data.secure_url) {
       toast.error("Image Failed to generate Url...", {
@@ -21,7 +22,7 @@ export const uploadToCloudinary = async (file) => {
       });
       return false
     }
-    return [data.secure_url];
+    return [optimizedUrl];
   } catch (error) {
     console.log(error.message);
   }

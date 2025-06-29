@@ -23,10 +23,10 @@ const LoginLogoutChecker = () => {
               }}
             />
           ) : (
-            <CiUser className="h-8 w-8 rounded-full bg-[var(--color-primary)] p-1 text-white shadow-sm" />
+            <CiUser className="h-8 w-8 xl:h-10 xl:w-10 rounded-full bg-[var(--color-primary)] p-1 text-white shadow-sm" />
           )
         ) : (
-          <RiLoginCircleFill className="text-4xl text-[var(--color-primary)] transition-colors duration-300 hover:text-[var(--color-secondary)] md:text-4xl" />
+          <RiLoginCircleFill className="text-4xl xl:text-5xl text-[var(--color-primary)] transition-colors duration-300 hover:text-[var(--color-secondary)] md:text-4xl" />
         )}
       </Link>
     </div>

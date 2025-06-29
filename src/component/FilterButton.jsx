@@ -17,7 +17,7 @@ const FilterButton = ({ filterHandler, clickHandler, openFilter, isDark }) => {
         onClick={clickHandler}
         style={{ color: isDark ? "#e0e0e0" : "#2c2c2c" }}
       >
-        <BsFilterRight className="text-[24px] md:text-3xl" />
+        <BsFilterRight className="text-[24px] md:text-3xl xl:text-5xl" />
       </button>
       {openFilter ? (
         <ul className="absolute right-0 z-50 mt-2 min-w-[64px] overflow-hidden rounded border bg-white shadow-lg">

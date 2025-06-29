@@ -9,7 +9,6 @@ const Gallery = ({ filterKey, search, customCollection, isDark }) => {
   const { images, loading } = useImages();
   const [filteredData, setFilteredData] = useState([]);
   const [user, setUser] = useState(null);
-  console.log(filteredData);
 
   const breakpoints = {
     default: 6,

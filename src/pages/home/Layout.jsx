@@ -9,6 +9,7 @@ import Footer from "../../component/Footer";
 import NavBar from "../../component/NavBar";
 import SideNav from "../../component/SideNav";
 import { Outlet } from "react-router";
+import imageCompression from "browser-image-compression";
 
 const Layout = ({ isDark, darkModeHandler }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,6 @@ const Layout = ({ isDark, darkModeHandler }) => {
   const [uploadLoading, setUploadLoading] = useState(false);
   const [customCollection, setCustomCollection] = useState(false);
   const [settingOpen, setSettingOpen] = useState(false);
-  
 
   const uploadHandler = (e) => {
     e.preventDefault();
@@ -48,10 +48,15 @@ const Layout = ({ isDark, darkModeHandler }) => {
     }
     try {
       setUploadLoading(true);
-      const imgUrl = await uploadToCloudinary(file);
+      const compressed = await imageCompression(file, {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1200,
+        useWebWorker: true,
+      });
+      const imgUrl = await uploadToCloudinary(compressed);
       setImageURL(imgUrl);
     } catch (error) {
-      console.log("upload failed");
+      console.log("");
     } finally {
       setUploadLoading(false);
     }
@@ -75,7 +80,7 @@ const Layout = ({ isDark, darkModeHandler }) => {
   };
 
   return (
-    <div className="h-screen md:flex">
+    <div className="h-screen w-screen md:flex">
       <SideNav
         uploadHandler={uploadHandler}
         favCollection={favCollection}
