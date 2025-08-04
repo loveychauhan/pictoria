@@ -5,6 +5,7 @@ import Button from "../../component/Button";
 import useDocData from "../../hooks/useDocData";
 import { auth } from "../../firebase/firebase";
 import { CiUser } from "react-icons/ci";
+import { IoMdArrowBack } from "react-icons/io";
 
 const LoginDetail = ({}) => {
   const { data } = useDocData("User");
@@ -33,6 +34,13 @@ const LoginDetail = ({}) => {
               color: "var(--color-gray)",
             }}
           >
+            <button
+              onClick={() => history.back()}
+              title="return"
+              className="block max-w-[48px] rounded-[10px] border-2 px-2 py-0.5 "
+            >
+              <IoMdArrowBack className="text-3xl" />
+            </button>
             <h2 className="text-center text-2xl font-semibold text-[var(--color-gray)]">
               Welcome, {data.fname}
             </h2>

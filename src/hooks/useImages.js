@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 const useImages = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true)
-  // console.log(loading)
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
